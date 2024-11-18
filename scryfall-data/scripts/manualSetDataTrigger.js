@@ -1,7 +1,7 @@
-const { fetchBulkData } = require("./downloadData");
+const { fetchSetData } = require("./downloadData");
 
 (async () => {
   console.log("Triggering Scryfall script...");
-  await fetchBulkData();
+  await fetchSetData();
   console.log("Script execution completed.")
 })();

@@ -5,7 +5,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",
-    "scryfall": "node scryfall-data/scripts/manualTrigger.js"
+    "scryfall-card": "node scryfall-data/scripts/manualCardDataTrigger.js",
+    "scryfall-set": "node scryfall-data/scripts/manualSetDataTrigger.js"
   },
   "author": "",
   "license": "ISC",
