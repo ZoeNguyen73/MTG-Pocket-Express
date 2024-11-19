@@ -8,7 +8,6 @@ const SetModel = require("../../models/setModel");
 const SET_LIST = require("./setList");
 const CARD_SEARCH_BY_SET_API = "https://api.scryfall.com/cards/search?q=set%3D";
 const layoutCardFaceMapping = require("../../utils/cardLayoutsMapping");
-const CARD_LAYOUTS = Object.keys(layoutCardFaceMapping);
 
 const connectDb = async () => {
   try {
@@ -27,7 +26,7 @@ const connectDb = async () => {
 
 const getCardDataBySet = async (setCode) => {
   const api = CARD_SEARCH_BY_SET_API + setCode;
-  const data = [];
+  let data = [];
   let response = null;
 
   try {
@@ -136,11 +135,13 @@ const seedData = async (cardData, setCode) => {
       frame: card.frame,
       set_id: setId,
     };
+
+    return formattedCard;
     
   });
 
   try {
-    await ItemModel.insertMany(formattedCards);
+    await CardModel.insertMany(formattedCards);
     console.log(`All cards from set ${setCode} have been seeded successfully.`);
   } catch (error) {
     console.error(`Error during bulk insert for set ${setCode}: ${error.message}.`);
