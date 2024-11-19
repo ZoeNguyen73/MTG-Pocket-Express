@@ -1,0 +1,28 @@
+const layoutCardFaceMapping = {
+  normal: 1,
+  split: 1,
+  flip: 1,
+  transform: 2,
+  modal_dfc: 2,
+  meld: 1,
+  leveler: 1,
+  class: 1,
+  case: 1,
+  saga: 1,
+  adventure: 1,
+  mutate: 1,
+  prototype: 1,
+  battle: 2,
+  planar: 1,
+  scheme: 1,
+  vanguard: 1,
+  token: 1,
+  double_faced_token: 2,
+  emblem: 1,
+  augment: 1,
+  host: 1,
+  art_series: 2,
+  reversible_card: 2,
+};
+
+module.exports = layoutCardFaceMapping;
