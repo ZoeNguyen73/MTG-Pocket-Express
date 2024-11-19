@@ -6,7 +6,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",
     "scryfall-card": "node scryfall-data/scripts/manualCardDataTrigger.js",
-    "scryfall-set": "node scryfall-data/scripts/manualSetDataTrigger.js"
+    "scryfall-set": "node scryfall-data/scripts/manualSetDataTrigger.js",
+    "seed-set": "node scryfall-data/seeds/setSeed.js"
   },
   "author": "",
   "license": "ISC",
