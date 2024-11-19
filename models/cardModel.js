@@ -21,7 +21,7 @@ const cardFaceSchema = new mongoose.Schema({
 
 const cardSchema = new mongoose.Schema({
   set_id: {
-    type: mongoose.isObjectIdOrHexString,
+    type: mongoose.ObjectId,
     ref: "Set",
     required: true,
   },

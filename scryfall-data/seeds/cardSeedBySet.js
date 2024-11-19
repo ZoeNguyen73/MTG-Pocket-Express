@@ -2,11 +2,12 @@ require("dotenv").config();
 const mongoose = require("mongoose");
 const axios = require("axios");
 
-// to import Card Model
+const CardModel = require("../../models/cardModel");
 const SetModel = require("../../models/setModel");
 
 const SET_LIST = require("./setList");
 const CARD_SEARCH_BY_SET_API = "https://api.scryfall.com/cards/search?q=set%3D";
+const layoutCardFaceMapping = require("../../utils/cardLayoutsMapping");
 
 const connectDb = async () => {
   try {
@@ -25,7 +26,7 @@ const connectDb = async () => {
 
 const getCardDataBySet = async (setCode) => {
   const api = CARD_SEARCH_BY_SET_API + setCode;
-  const data = [];
+  let data = [];
   let response = null;
 
   try {
@@ -87,39 +88,60 @@ const seedData = async (cardData, setCode) => {
     console.error(error.message);
   }
   
-  const formattedCards = cardData.map(card => ({
-    scryfall_id: card.id,
-    name: card.name,
-    lang: card.lang,
-    scryfall_uri: card.scryfall_uri,
-    layout: card.layout,
-    highres_image: card.highres_image,
-    image_png: card.image_uris.png,
-    image_jpg_normal: card.image_uris.normal,
-    image_border_crop: card.image_uris.border_crop,
-    border_color: card.border_color,
-    reserved: card.reserved,
-    foil: card.foil,
-    nonfoil: card.nonfoil,
-    oversized: card.oversized,
-    promo: card.promo,
-    reprint: card.reprint,
-    variation: card.variation,
-    variation_of: card.variation_of || null,
-    digital: card.digital,
-    full_art: card.full_art,
-    textless: card.textless,
-    booster: card.booster,
-    rarity: card.rarity,
-    frame: card.frame,
-    set_id: setId,
-    price_usd: card.prices.usd,
-    prices_usd_foil: card.prices.usd_foil,
-    prices_usd_etched: card.prices.usd_etched,
-  }));
+  const formattedCards = cardData.map(card => {
+    const card_faces = [];
+    
+    if (layoutCardFaceMapping[card.layout] === 1) {
+      const face = {
+        name: card.name,
+        image_png: card.image_uris.png,
+        image_jpg_normal: card.image_uris.normal,
+        image_border_crop: card.image_uris.border_crop,
+        layout: card.layout,
+      };
+      card_faces.push(face);
+    } else if (layoutCardFaceMapping[card.layout] > 1) {
+      for (let i = 0; i < card.card_faces.length; i++) {
+        const data = card.card_faces[i];
+        const face = {
+          name: data.name,
+          image_png: data.image_uris.png,
+          image_jpg_normal: data.image_uris.normal,
+          image_border_crop: data.image_uris.border_crop,
+          layout: data.layout || null,
+        };
+        card_faces.push(face);
+      }
+    }
+
+    const formattedCard = {
+      scryfall_id: card.id,
+      lang: card.lang,
+      scryfall_uri: card.scryfall_uri,
+      layout: card.layout,
+      card_faces,
+      highres_image: card.highres_image,
+      border_color: card.border_color,
+      reserved: card.reserved,
+      finishes: [...card.finishes],
+      oversized: card.oversized,
+      promo: card.promo,
+      reprint: card.reprint,
+      digital: card.digital,
+      full_art: card.full_art,
+      textless: card.textless,
+      booster: card.booster,
+      rarity: card.rarity,
+      frame: card.frame,
+      set_id: setId,
+    };
+
+    return formattedCard;
+    
+  });
 
   try {
-    await ItemModel.insertMany(formattedCards);
+    await CardModel.insertMany(formattedCards);
     console.log(`All cards from set ${setCode} have been seeded successfully.`);
   } catch (error) {
     console.error(`Error during bulk insert for set ${setCode}: ${error.message}.`);
