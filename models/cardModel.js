@@ -44,6 +44,8 @@ const cardSchema = new mongoose.Schema({
     default: "normal",
   },
   card_faces: {
+    // array of card faces for this card
+    // normal cards will have only 1 face in this array
     type: [cardFaceSchema],
     required: true,
   },
