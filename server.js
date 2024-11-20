@@ -5,6 +5,7 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 
 const authRouter = require("./routes/authRoutes");
+const userRouter = require("./routes/userRoutes");
 
 const app = express();
 const port = process.env.PORT || 8800;
@@ -14,15 +15,15 @@ app.use(express.json());
 
 app.use(cors({ origin: process.env.CORS_ORIGIN }));
 
-<<<<<<< HEAD
 // Handle 404 errors
 app.use(notFoundHandler);
 
 // Centralized error handling middleware
 app.use(errorHandler);
-=======
+
+// all routes
 app.use("/api/v1/auth", authRouter);
->>>>>>> e088e7e (feat: add authRouter to server.js)
+app.use("/api/v1/users", userRouter);
 
 app.listen(port, async() => {
   try {
