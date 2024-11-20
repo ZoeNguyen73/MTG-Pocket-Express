@@ -12,6 +12,12 @@ app.use(express.json());
 
 app.use(cors({ origin: process.env.CORS_ORIGIN }));
 
+// Handle 404 errors
+app.use(notFoundHandler);
+
+// Centralized error handling middleware
+app.use(errorHandler);
+
 app.listen(port, async() => {
   try {
     await mongoose.connect(process.env.MONGO_DB_STRING, { dbName: "MTG-Pocket" });
