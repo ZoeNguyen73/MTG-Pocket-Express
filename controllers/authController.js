@@ -64,6 +64,10 @@ const controller = {
       return res.json({ activateToken });
 
     } catch (error) {
+      if (!error.statusCode) {
+        error.statusCode = 400;
+        error.details = "Invalid input due to error: " + error.message;
+      }
       next(error);
     }
   },
