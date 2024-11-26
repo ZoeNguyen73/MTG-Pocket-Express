@@ -133,7 +133,37 @@ const controller = {
   },
 
   refresh: async (req, res, next) => {
+    const errMsg = "Unable to verify refresh token";
+    try {
+      const { refreshToken } = req.body;
+      const token = await RefreshTokenModel.findOne({ token: refreshToken });
+      const verified = jwt.verify(refreshToken, process.env.JWT_SECRET_REFRESH);
+    
+      if (token && verified) {
+        const { username } = verified.data;
+        const user = await UserModel.findOne({ username });
 
+        if (!user) {
+          const error = new Error();
+          error.statusCode = 404;
+          error.details = errMsg;
+          throw error;
+        }
+
+        const newAccessToken = createAccessToken(username);
+        return res.json({ accessToken: newAccessToken });
+      }
+
+      const error = new Error();
+      error.statusCode = 401;
+      error.details = errMsg;
+      throw error;
+    
+    } catch (error) {
+      error.statusCode = 401;
+      error.details = errMsg;
+      next(error);
+    }
   },
 
   logout: async (req, res, next) => {
