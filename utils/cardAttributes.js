@@ -12,6 +12,21 @@ const FINISHES = [
   "etched",
 ];
 
+const FINISHES_DROP_RATE = [
+  {
+    finish: "etched",
+    rate: 1 / 70,
+  },
+  {
+    finish: "foil",
+    rate: 1 / 45,
+  },
+  { 
+    finish: "nonfoil", 
+    rate: 1 - (1 / 45 + 1 / 70) 
+  }, // Remaining probability after foil and etched
+];
+
 const RARITY = [
   "common",
   "uncommon",
@@ -41,4 +56,4 @@ const LANGUAGES = [
   "ph"
 ];
 
-module.exports = { BORDER_COLORS, FINISHES, RARITY, LANGUAGES };
+module.exports = { BORDER_COLORS, FINISHES, RARITY, LANGUAGES, FINISHES_DROP_RATE };

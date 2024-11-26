@@ -1,7 +1,7 @@
 const Joi = require("joi");
 
-const { LANGUAGES, BORDER_COLORS, RARITY, FINISHES } = require("../utils/cardAttributes");
-const layoutCardFaceMapping = require("../utils/cardLayoutsMapping");
+import layoutCardFaceMapping from "../utils/cardLayoutsMapping";
+import { LANGUAGES, BORDER_COLORS, RARITY, FINISHES } from "../utils/cardAttributes";
 const CARD_LAYOUTS = Object.keys(layoutCardFaceMapping);
 
 const cardValidationSchema = {
