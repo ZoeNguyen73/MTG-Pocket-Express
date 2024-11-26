@@ -167,7 +167,17 @@ const controller = {
   },
 
   logout: async (req, res, next) => {
-
+    try {
+      const { refreshToken } = req.body;
+      await RefreshTokenModel.findOneAndDelete({ token: refreshToken });
+      return res.json({
+        message: "Refresh token deleted successfully",
+      });
+    } catch (error) {
+      error.details = "Unable to remove refresh token";
+      error.statusCode = 409;
+      next(error);
+    }
   },
 };
 
