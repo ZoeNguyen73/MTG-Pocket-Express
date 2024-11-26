@@ -1,11 +1,9 @@
-import getRandomCards from "../services/cardService";
-import BOOSTER_TYPES from "../utils/boosterTypes";
+const { getRandomCards } = require("../services/cardService");
+const BOOSTER_TYPES = require("../utils/boosterTypes");
 
 const controller = {
   open: async (req, res, next) => {
     const { setCode, packType } = req.params;
-    console.log("packController open function...");
-    console.log("setCode: ", setCode, ", packType: ", packType);
 
     try {
       // find matching booster type

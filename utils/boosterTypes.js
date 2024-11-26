@@ -1,4 +1,4 @@
-const RARITY = require("./cardAttributes");
+const { RARITY } = require("./cardAttributes");
 
 const BOOSTER_TYPES = [
   {

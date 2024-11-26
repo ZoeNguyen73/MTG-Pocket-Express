@@ -1,25 +1,22 @@
-import CardModel from "../models/cardModel";
-import SetModel from "../models/setModel";
+const CardModel = require("../models/cardModel");
+const SetModel = require("../models/setModel");
 
-import { getRandomInt } from "../utils/randomUtils";
-import { FINISHES_DROP_RATE } from "../utils/cardAttributes";
+const getRandomInt = require("../utils/randomUtils")
+const { FINISHES_DROP_RATE } = require("../utils/cardAttributes");
 
 const getRandomFinish = (availableFinishes) => {
-  if (finishes.length === 1) {
-    return finishes[0];
-
-  } else if (finishes.length === 0) {
-    throw new Error("Missing finishes information from card.");
+  if (availableFinishes.length === 1) {
+    return availableFinishes[0];
 
   } else {
-    const filteredFinishes = FINISHES_DROP_RATE.filter((rate) => 
+    const filteredRates = FINISHES_DROP_RATE.filter((rate) => 
       availableFinishes.includes(rate.finish)
     );
 
     const chance = Math.random();
     let culmulativeRate = 0;
 
-    for (const { finish, rate } of filteredFinishes) {
+    for (const { finish, rate } of filteredRates) {
       culmulativeRate += rate;
       if (chance <= culmulativeRate) {
         return finish;
@@ -72,18 +69,18 @@ const getRandomCards = async ({ setCode, rarity, type = {}, quantity }) => {
 
   // handle type inclusion
   if (type.include && type.include.length) {
-    query.type_line = {
+    query["card_faces.type_line"] = {
       $regex: type.include.map((t) => `(${t})`).join("|"),
-      $options: "i", // Case-insensitive match
+      $options: "i",
     };
   }
 
   // Handle type exclusion
   if (type.exclude && type.exclude.length) {
-    query.type_line = query.type_line
+    query["card_faces.type_line"] = query["card_faces.type_line"]
       ? {
-          $regex: query.type_line.$regex, // Keep the inclusion logic
-          $options: query.type_line.$options,
+          $regex: query["card_faces.type_line"].$regex, // Keep the inclusion logic
+          $options: query["card_faces.type_line"].$options,
           $not: {
             $regex: type.exclude.map((t) => `(${t})`).join("|"),
             $options: "i",
