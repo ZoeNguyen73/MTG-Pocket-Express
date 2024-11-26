@@ -17,6 +17,10 @@ const cardFaceSchema = new mongoose.Schema({
   layout: {
     type: String,
   },
+  type_line: {
+    type: String,
+    required: true,
+  }
 });
 
 const cardSchema = new mongoose.Schema({
@@ -101,10 +105,6 @@ const cardSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  type_line: {
-    type: String,
-    required: true,
-  }
 });
 
 const CardModel = mongoose.model("Card", cardSchema);

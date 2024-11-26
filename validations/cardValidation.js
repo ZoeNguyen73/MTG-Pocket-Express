@@ -18,6 +18,7 @@ const cardValidationSchema = {
         image_jpg_normal: Joi.string().required().min(1).uri(),
         image_border_crop: Joi.string().required().min(1).uri(),
         layout: Joi.string(),
+        type_line: Joi.string().required(),
       })
     ),
     highres_image: Joi.boolean().required(),
@@ -33,7 +34,6 @@ const cardValidationSchema = {
     booster: Joi.boolean().required(),
     rarity: Joi.string().required().valid(...RARITY),
     frame: Joi.string().required(),
-    type_line: Joi.string().required(),
   }),
   update: Joi.object({
     set_id: Joi.string().required().min(1).max(30),
@@ -48,6 +48,7 @@ const cardValidationSchema = {
         image_jpg_normal: Joi.string().required().min(1).uri(),
         image_border_crop: Joi.string().required().min(1).uri(),
         layout: Joi.string(),
+        type_line: Joi.string().required(),
       })
     ),
     highres_image: Joi.boolean().required(),
@@ -63,7 +64,6 @@ const cardValidationSchema = {
     booster: Joi.boolean().required(),
     rarity: Joi.string().required().valid(...RARITY),
     frame: Joi.string().required(),
-    type_line: Joi.string().required(),
   }),
 };
 
