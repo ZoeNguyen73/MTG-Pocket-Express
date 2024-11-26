@@ -33,6 +33,7 @@ const cardValidationSchema = {
     booster: Joi.boolean().required(),
     rarity: Joi.string().required().valid(...RARITY),
     frame: Joi.string().required(),
+    type_line: Joi.string().required(),
   }),
   update: Joi.object({
     set_id: Joi.string().required().min(1).max(30),
@@ -62,6 +63,7 @@ const cardValidationSchema = {
     booster: Joi.boolean().required(),
     rarity: Joi.string().required().valid(...RARITY),
     frame: Joi.string().required(),
+    type_line: Joi.string().required(),
   }),
 };
 

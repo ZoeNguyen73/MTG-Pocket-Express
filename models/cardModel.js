@@ -101,6 +101,10 @@ const cardSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  type_line: {
+    type: String,
+    required: true,
+  }
 });
 
 const CardModel = mongoose.model("Card", cardSchema);
