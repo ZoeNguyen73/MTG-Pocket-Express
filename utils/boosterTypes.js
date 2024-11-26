@@ -1,6 +1,7 @@
 const RARITY = require("./cardAttributes");
 
 const PLAY_BOOSTER = {
+  code: "play-booster",
   totalCardCount: 13, // minus 1 non-playable card
   distributions: [
     {
