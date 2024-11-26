@@ -1,8 +1,8 @@
 const jwt = require("jsonwebtoken");
 
-const UserModel = require("../models/userModel");
-const UserValidator = require("../validations/userValidation");
-const RefreshTokenModel = require("../models/refreshTokenModel");
+import UserModel from "../models/userModel";
+import { userValidationSchema as UserValidator } from "../validations/userValidation";
+import RefreshTokenModel from "../models/refreshTokenModel";
 
 const controller = {
   activateAccount: async (req, res, next) => {

@@ -8,7 +8,7 @@ const PLAY_BOOSTER = {
       rarity: ["common"],
       quantity: 6,
       type_line: {
-        "excludes": ["Land"],
+        "exclude": ["Land"],
       },
     },
     {
@@ -23,14 +23,14 @@ const PLAY_BOOSTER = {
       rarity: [...RARITY],
       quantity: 2,
       type_line: {
-        "excludes": ["Land"],
+        "exclude": ["Land"],
       },
     },
     {
       rarity: ["common"],
       quantity: 1,
       type_line: {
-        "includes": ["Land"],
+        "include": ["Land"],
       },
     }
   ]

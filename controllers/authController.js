@@ -1,9 +1,9 @@
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 
-const UserModel = require("../models/userModel");
-const UserValidator = require("../validations/userValidation");
-const RefreshTokenModel = require("../models/refreshTokenModel");
+import UserModel from "../models/userModel";
+import { userValidationSchema as UserValidator } from "../validations/userValidation";
+import RefreshTokenModel from "../models/refreshTokenModel";
 
 const createAccessToken = (username) => {
   const accessToken = jwt.sign(
