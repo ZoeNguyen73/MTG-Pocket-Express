@@ -73,7 +73,63 @@ const controller = {
   },
 
   login: async (req, res, next) => {
+    let validatedResults = null;
+    try {
+      validatedResults = await UserValidator.login.validateAsync(req.body);
+    } catch (error) {
+      error.statusCode = 400;
+      next(error);
+    }
 
+    const errMsg = "Incorrect username or password";
+    let user = null;
+
+    try {
+      user = await UserModel.findOne({ username: validatedResults. username});
+      if (!user) {
+        const error = new Error();
+        error.statusCode = 404;
+        error.details = errMsg;
+        throw error;
+      }
+
+      const isPasswordCorrect = await bcrypt.compare(
+        validatedResults.hash,
+        user.hash
+      );
+
+      if (!isPasswordCorrect) {
+        const error = new Error();
+        error.statusCode = 401;
+        error.details = errMsg;
+        throw error;
+      }
+
+      const username = user.username;
+
+      const accessToken = createAccessToken(username);
+
+      const refreshToken = jwt.sign(
+        {
+          // refresh token expiring in 1 day
+          exp: Math.floor(Date.now()/1000 + 60 * 60 * 24),
+          data: { username },
+        },
+        process.env.JWT_SECRET_REFRESH
+      );
+
+      // store refresh token in database
+      await RefreshTokenModel.create({ token: refreshToken });
+
+      return res.json({ avatar: user.avatar, accessToken, refreshToken });
+
+    } catch (error) {
+      if (!error.statusCode) {
+        error.statusCode = 500;
+        error.details = "Failed to get user";
+      }
+      next(error);
+    }
   },
 
   refresh: async (req, res, next) => {
