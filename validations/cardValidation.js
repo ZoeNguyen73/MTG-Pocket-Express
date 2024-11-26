@@ -18,6 +18,7 @@ const cardValidationSchema = {
         image_jpg_normal: Joi.string().required().min(1).uri(),
         image_border_crop: Joi.string().required().min(1).uri(),
         layout: Joi.string(),
+        type_line: Joi.string().required(),
       })
     ),
     highres_image: Joi.boolean().required(),
@@ -47,6 +48,7 @@ const cardValidationSchema = {
         image_jpg_normal: Joi.string().required().min(1).uri(),
         image_border_crop: Joi.string().required().min(1).uri(),
         layout: Joi.string(),
+        type_line: Joi.string().required(),
       })
     ),
     highres_image: Joi.boolean().required(),

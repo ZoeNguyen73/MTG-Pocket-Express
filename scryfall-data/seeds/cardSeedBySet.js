@@ -98,6 +98,7 @@ const seedData = async (cardData, setCode) => {
         image_jpg_normal: card.image_uris.normal,
         image_border_crop: card.image_uris.border_crop,
         layout: card.layout,
+        type_line: card.type_line,
       };
       card_faces.push(face);
     } else if (layoutCardFaceMapping[card.layout] > 1) {
@@ -109,6 +110,7 @@ const seedData = async (cardData, setCode) => {
           image_jpg_normal: data.image_uris.normal,
           image_border_crop: data.image_uris.border_crop,
           layout: data.layout || null,
+          type_line: data.type_line || null,
         };
         card_faces.push(face);
       }
