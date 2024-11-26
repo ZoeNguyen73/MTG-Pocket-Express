@@ -2,6 +2,35 @@ import CardModel from "../models/cardModel";
 import SetModel from "../models/setModel";
 
 import { getRandomInt } from "../utils/randomUtils";
+import { FINISHES_DROP_RATE } from "../utils/cardAttributes";
+
+const getRandomFinish = (availableFinishes) => {
+  if (finishes.length === 1) {
+    return finishes[0];
+
+  } else if (finishes.length === 0) {
+    throw new Error("Missing finishes information from card.");
+
+  } else {
+    const filteredFinishes = FINISHES_DROP_RATE.filter((rate) => 
+      availableFinishes.includes(rate.finish)
+    );
+
+    const chance = Math.random();
+    let culmulativeRate = 0;
+
+    for (const { finish, rate } of filteredFinishes) {
+      culmulativeRate += rate;
+      if (chance <= culmulativeRate) {
+        return finish;
+      }
+    }
+
+    // Default to the last available finish (fallback)
+    return filteredRates[filteredRates.length - 1].finish;
+
+  }
+};
 
 /**
  * Generates a random card based on the provided query parameters.
@@ -79,7 +108,17 @@ const getRandomCards = async ({ setCode, rarity, type = {}, quantity }) => {
 
   for (let i = 1; i <= quantity; i++) {
     const randomIndex = getRandomInt(0, cards.length - 1);
-    generatedCards.push(cards[randomIndex]);
+    const card = cards[randomIndex];
+
+    const { finishes } = card;
+
+    if (!finishes || !finishes.length) {
+      throw new Error(`Card ${card.name} has no valid finishes.`);
+    }
+
+    const finish = getRandomFinish(finishes);
+    generatedCards.push({ ...card.toObject(), finish });
+
   }
 
   return generatedCards;
