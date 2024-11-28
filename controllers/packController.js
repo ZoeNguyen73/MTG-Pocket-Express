@@ -2,6 +2,34 @@ const { getRandomCards } = require("../services/cardService");
 const BOOSTER_TYPES = require("../utils/boosterTypes");
 
 const SetModel = require("../models/setModel");
+const UserCardModel = require("../models/userCardModel");
+const UserCardValidator = require("../validations/userCardValidation");
+
+const updateUserCard = async (user_id, card, quantity = 1) => {
+  const card_id = card._id.toString();
+  const finish = card.finish;
+
+  try {
+    await UserCardValidator.update.validateAsync({
+      user_id,
+      card_id,
+      finish,
+      quantity
+    });
+  } catch (error) {
+    throw new Error(`Validation Error: ${error.message}`);
+  }
+
+  try {
+    await UserCardModel.updateOne(
+      { user_id, card_id, finish },
+      { $inc: { quantity } },
+      { upsert: true }
+    )
+  } catch (error) {
+    next(error);
+  }
+};
 
 const controller = {
   open: async (req, res, next) => {
@@ -50,6 +78,16 @@ const controller = {
         results = results.concat(cards);
       }
 
+      const user_id = req.authUser.userID;
+
+      for await (const card of results) {
+        try {
+          await updateUserCard(user_id, card);
+        } catch (error) {
+          next(error);
+        }
+      }
+
       const data = {
         set,
         card_quantity: results.length,
@@ -60,8 +98,8 @@ const controller = {
       
     } catch (error) {
       if (!error.statusCode) {
-        error.statusCode = 400;
-        error.details = "Invalid input due to error: " + error.message;
+        error.statusCode = 500;
+        error.details = "Error generating cards from pack: " + error.message;
       }
       next(error);
     }
