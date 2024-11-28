@@ -1,12 +1,12 @@
 const mongoose = require("mongoose");
 
 const userCardSchema = new mongoose.Schema({
-  userId: {
+  user_id: {
     type: mongoose.ObjectId,
     ref: "User",
     required: true,
   },
-  cardId: {
+  card_id: {
     type: mongoose.ObjectId,
     ref: "Card",
     required: true,
@@ -15,7 +15,7 @@ const userCardSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  count: {
+  quantity: {
     type: Number,
     required: true,
     default: 1,
@@ -24,7 +24,7 @@ const userCardSchema = new mongoose.Schema({
 
 // unique compound index to ensure no duplicated document
 // userId - cardId - finish combination should be unique
-userCardSchema.index({ userId: 1, cardId: 1, finish: 1}, { unique: true });
+userCardSchema.index({ user_id: 1, card_id: 1, finish: 1}, { unique: true });
 
 const UserCardModel = mongoose.model("User Card", userCardSchema);
 
