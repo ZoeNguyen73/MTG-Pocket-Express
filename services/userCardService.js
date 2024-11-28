@@ -29,6 +29,14 @@ const updateUserCard = async (user_id, card, quantity = 1) => {
 
 const transferUserCard = async (fromUserId, toUserId, card_id, finish, transferQuantity = 1) => {
   try {
+    // validate that the transfer quantity is valid 
+    if (!Number.isInteger(transferQuantity) || transferQuantity < 1) {
+      const error = new Error();
+      error.details = `Transfer Quantity ${transferQuantity} is invalid`;
+      error.statusCode = 400;
+      throw error;
+    }
+
     // validate that the fromUserId has the card
     const fromUserCard = await UserCardModel.findOne({
       user_id: fromUserId,
