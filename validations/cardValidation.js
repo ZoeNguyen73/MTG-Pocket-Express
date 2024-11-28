@@ -6,7 +6,7 @@ const CARD_LAYOUTS = Object.keys(layoutCardFaceMapping);
 
 const cardValidationSchema = {
   create: Joi.object({
-    set_id: Joi.string().required().min(1).max(30),
+    set_id: Joi.string().required().length(24),
     scryfall_id: Joi.string().required().min(1),
     lang: Joi.string().required().valid(...LANGUAGES),
     scryfall_id: Joi.string().required().min(1),
@@ -36,7 +36,7 @@ const cardValidationSchema = {
     frame: Joi.string().required(),
   }),
   update: Joi.object({
-    set_id: Joi.string().required().min(1).max(30),
+    set_id: Joi.string().required().min(1).length(24),
     scryfall_id: Joi.string().required().min(1),
     lang: Joi.string().required().valid(...LANGUAGES),
     scryfall_id: Joi.string().required().min(1),
