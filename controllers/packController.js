@@ -4,14 +4,13 @@ const BOOSTER_TYPES = require("../utils/boosterTypes");
 const SetModel = require("../models/setModel");
 const UserCardModel = require("../models/userCardModel");
 const UserCardValidator = require("../validations/userCardValidation");
-const UserModel = require("../models/userModel");
 
 const updateUserCard = async (user_id, card, quantity = 1) => {
   const card_id = card._id.toString();
   const finish = card.finish;
 
   try {
-    const validatedResults = await UserCardValidator.update.validateAsync({
+    await UserCardValidator.update.validateAsync({
       user_id,
       card_id,
       finish,
@@ -22,7 +21,7 @@ const updateUserCard = async (user_id, card, quantity = 1) => {
   }
 
   try {
-    const result = await UserCardModel.updateOne(
+    await UserCardModel.updateOne(
       { user_id, card_id, finish },
       { $inc: { quantity } },
       { upsert: true }
