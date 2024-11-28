@@ -1,9 +1,29 @@
 const { getRandomCards } = require("../services/cardService");
 const BOOSTER_TYPES = require("../utils/boosterTypes");
 
+const SetModel = require("../models/setModel");
+
 const controller = {
   open: async (req, res, next) => {
     const { setCode, packType } = req.params;
+
+    let set = null;
+    try {
+      set = await SetModel.findOne({ code: setCode });
+      if (!set) {
+        const error = new Error();
+        error.details = "Unable to find matching Set in database";
+        error.statusCode = 404;
+        throw error;
+      }
+
+    } catch (error) {
+      if (!error.statusCode) {
+        error.statusCode = 400;
+        error.details = "Invalid input due to error: " + error.message;
+      }
+      next(error);
+    }
 
     try {
       // find matching booster type
@@ -31,6 +51,7 @@ const controller = {
       }
 
       const data = {
+        set,
         card_quantity: results.length,
         cards: results,
       };
