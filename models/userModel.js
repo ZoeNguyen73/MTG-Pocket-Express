@@ -20,6 +20,11 @@ const userSchema = new mongoose.Schema({
     required: true,
     default: "Fblthp_1",
   },
+  roles: {
+    type: [String], // example: "User", "Admin", "Super Admin"
+    required: true,
+    default: ["User"],
+  },
 });
 
 const UserModel = mongoose.model("User", userSchema);

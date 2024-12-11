@@ -19,12 +19,12 @@ const controller = {
       const user = await UserModel.create(verified.data);
 
       // auto initiate login
-      const { username } = user;
+      const { username, roles } = user;
       const accessToken = jwt.sign(
         {
           // accessToken expiring in 15 minutes
           exp: Math.floor(Date.now() / 1000) + 60 * 15,
-          data: { username },
+          data: { username, roles },
         },
         process.env.JWT_SECRET_ACCESS
       );
