@@ -46,6 +46,39 @@ const controller = {
       next(error);
     }
   },
+
+  updateByUsername: async (req, res, next) => {
+    try {
+      await UserValidator.update.validateAsync(req.body);
+    } catch (error) {
+      error.statusCode = 400;
+      next(error);
+    }
+
+    try {
+      const user = await UserModel.findOne({ username: req.params.username });
+      if (!user) {
+        const error = new Error();
+        error.statusCode = 404;
+        throw error;
+      }
+
+      const updatedUser = await UserModel.findOneAndUpdate(
+        { username: req.params.username },
+        {
+          username: req.body.username || req.params.username, 
+          email: req.body.email || user.email,
+          avatar: req.body.avatar || user.avatar, 
+        },
+        { new: true, select: "_id username email avatar"},
+      );
+
+      return res.status(201).json(updatedUser);
+    } catch (error) {
+      error.statusCode = 400;
+      next(error);
+    }
+  },
 };
 
 module.exports = controller;
