@@ -19,12 +19,12 @@ const controller = {
       const user = await UserModel.create(verified.data);
 
       // auto initiate login
-      const { username } = user;
+      const { username, roles } = user;
       const accessToken = jwt.sign(
         {
           // accessToken expiring in 15 minutes
           exp: Math.floor(Date.now() / 1000) + 60 * 15,
-          data: { username },
+          data: { username, roles },
         },
         process.env.JWT_SECRET_ACCESS
       );
@@ -43,6 +43,39 @@ const controller = {
       return res.json({ user, accessToken, refreshToken });
 
     } catch (error) {
+      next(error);
+    }
+  },
+
+  updateByUsername: async (req, res, next) => {
+    try {
+      await UserValidator.update.validateAsync(req.body);
+    } catch (error) {
+      error.statusCode = 400;
+      next(error);
+    }
+
+    try {
+      const user = await UserModel.findOne({ username: req.params.username });
+      if (!user) {
+        const error = new Error();
+        error.statusCode = 404;
+        throw error;
+      }
+
+      const updatedUser = await UserModel.findOneAndUpdate(
+        { username: req.params.username },
+        {
+          username: req.body.username || req.params.username, 
+          email: req.body.email || user.email,
+          avatar: req.body.avatar || user.avatar, 
+        },
+        { new: true, select: "_id username email avatar"},
+      );
+
+      return res.status(201).json(updatedUser);
+    } catch (error) {
+      error.statusCode = 400;
       next(error);
     }
   },

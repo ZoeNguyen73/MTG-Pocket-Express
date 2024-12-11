@@ -48,6 +48,43 @@ const userAuth = {
       next(error);
     }
   },
+
+  isAuthorized: (...allowedRoles) => { 
+    return async (req, res, next) => {
+      try {
+        const { username, roles, userID } = req.authUser;
+        for (i in roles) {
+          if (allowedRoles.includes(roles[i])) {
+            return next();
+          }
+        }
+
+        const route = req.baseUrl.split('/').pop();
+
+        const usersAuth = () => {
+          if (username === req.params.username) {
+            return next();
+          }
+          const error = new Error();
+          error.statusCode = 403;
+          throw error;
+        };
+
+        switch (route) {
+          case "users":
+            usersAuth();
+            break;
+          default:
+            const error = new Error();
+            error.statusCode = 403;
+            throw error;
+        }
+
+      } catch (error) {
+        next(error);
+      }
+    }
+  },
 };
 
 module.exports = userAuth;
