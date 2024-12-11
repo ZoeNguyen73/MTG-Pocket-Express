@@ -48,6 +48,10 @@ const userAuth = {
       next(error);
     }
   },
+
+  isAuthorized: async (req, res, next) => {
+    
+  },
 };
 
 module.exports = userAuth;
