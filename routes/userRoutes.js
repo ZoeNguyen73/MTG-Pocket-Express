@@ -7,7 +7,7 @@ const router = express.Router();
 router.post("/:token/activate", userController.activateAccount);
 router.put("/:username",
   userAuth.isAuthenticated,
-  userAuth.isAuthorized,
+  userAuth.isAuthorized("Admin"),
   userController.updateByUsername
 );
 
