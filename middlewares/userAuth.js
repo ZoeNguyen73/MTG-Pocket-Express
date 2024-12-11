@@ -61,6 +61,15 @@ const userAuth = {
 
         const route = req.baseUrl.split('/').pop();
 
+        const usersAuth = () => {
+          if (username === req.params.username) {
+            return next();
+          }
+          const error = new Error();
+          error.statusCode = 403;
+          throw error;
+        };
+
         switch (route) {
           case "users":
             usersAuth();
@@ -70,15 +79,6 @@ const userAuth = {
             error.statusCode = 403;
             throw error;
         }
-
-        const usersAuth = () => {
-          if (username === req.params.username) {
-            return next();
-          }
-          const error = new Error();
-          error.statusCode = 403;
-          throw error;
-        };
 
       } catch (error) {
         next(error);
