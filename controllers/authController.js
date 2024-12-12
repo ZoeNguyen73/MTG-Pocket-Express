@@ -88,7 +88,7 @@ const controller = {
       user = await UserModel.findOne({ username: validatedResults. username});
       if (!user) {
         const error = new Error();
-        error.statusCode = 404;
+        error.statusCode = 401;
         error.details = errMsg;
         throw error;
       }
