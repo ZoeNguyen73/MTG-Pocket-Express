@@ -3,6 +3,15 @@ const jwt = require("jsonwebtoken");
 const UserModel = require("../models/userModel");
 
 const userAuth = {
+  isOptionalAuthenticated: async (req, res, next) => {
+    if (!req.header("Authorization")) {
+      req.authUser = "guest";
+      return next();
+    } else {
+      return userAuth.isAuthenticated(req, res, next);
+    }
+  },
+
   isAuthenticated: async (req, res, next) => {
     try {
       const error = new Error();
