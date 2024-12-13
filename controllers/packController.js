@@ -52,16 +52,19 @@ const controller = {
         results = results.concat(cards);
       }
 
-      const user_id = req.authUser.userID;
+      // update userCard if the user is not guest
+      if (req.authUser !== "guest") {
+        const user_id = req.authUser.userID;
 
-      for await (const card of results) {
-        try {
-          await updateUserCard(user_id, card);
-        } catch (error) {
-          next(error);
+        for await (const card of results) {
+          try {
+            await updateUserCard(user_id, card);
+          } catch (error) {
+            next(error);
+          }
         }
       }
-
+      
       const data = {
         set,
         card_quantity: results.length,
