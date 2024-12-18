@@ -8,7 +8,8 @@
     "scryfall-card": "node scryfall-data/scripts/manualCardDataTrigger.js",
     "scryfall-set": "node scryfall-data/scripts/manualSetDataTrigger.js",
     "seed-set": "node scryfall-data/seeds/setSeed.js",
-    "seed-card": "node scryfall-data/seeds/cardSeedBySet.js"
+    "seed-card": "node scryfall-data/seeds/cardSeedBySet.js",
+    "seed-top-card": "node scryfall-data/seeds/topCardSeed.js"
   },
   "author": "",
   "license": "ISC",

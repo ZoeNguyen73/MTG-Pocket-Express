@@ -14,6 +14,7 @@ const cardValidationSchema = {
     card_faces: Joi.array().items(
       Joi.object({
         name: Joi.string().required().min(1),
+        image_small: Joi.string().required().min(1).uri(),
         image_png: Joi.string().required().min(1).uri(),
         image_jpg_normal: Joi.string().required().min(1).uri(),
         image_border_crop: Joi.string().required().min(1).uri(),
@@ -44,6 +45,7 @@ const cardValidationSchema = {
     card_faces: Joi.array().items(
       Joi.object({
         name: Joi.string().required().min(1),
+        image_small: Joi.string().required().min(1).uri(),
         image_png: Joi.string().required().min(1).uri(),
         image_jpg_normal: Joi.string().required().min(1).uri(),
         image_border_crop: Joi.string().required().min(1).uri(),

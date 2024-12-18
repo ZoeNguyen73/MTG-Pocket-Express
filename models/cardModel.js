@@ -5,6 +5,9 @@ const cardFaceSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  image_small: {
+    type: String,
+  },
   image_png: {
     type: String,
   },
