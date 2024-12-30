@@ -114,7 +114,13 @@ const getRandomCards = async ({ setCode, rarity, type = {}, quantity, note }) =>
     }
 
     const finish = getRandomFinish(finishes);
-    generatedCards.push({ ...card.toObject(), finish, note });
+    let price_code = "usd";
+    if (finish === "foil") {
+      price_code = "usd_foil";
+    } else if (finish === "etched") {
+      price_code = "usd_etched";
+    }
+    generatedCards.push({ ...card.toObject(), finish, note, final_price: card.prices[price_code] });
 
   }
 
