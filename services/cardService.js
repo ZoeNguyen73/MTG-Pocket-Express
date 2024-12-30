@@ -40,7 +40,7 @@ const getRandomFinish = (availableFinishes) => {
  * @returns {Object} A random card that matches the query criteria.
 */
 
-const getRandomCards = async ({ setCode, rarity, type = {}, quantity }) => {
+const getRandomCards = async ({ setCode, rarity, type = {}, quantity, note }) => {
   // validate the required parammeters
   if (!setCode || !rarity || !rarity.length) {
     throw new Error("setCode and rarity are required parameters.");
@@ -114,7 +114,7 @@ const getRandomCards = async ({ setCode, rarity, type = {}, quantity }) => {
     }
 
     const finish = getRandomFinish(finishes);
-    generatedCards.push({ ...card.toObject(), finish });
+    generatedCards.push({ ...card.toObject(), finish, note });
 
   }
 
