@@ -22,6 +22,7 @@ const BOOSTER_TYPES = [
       },
       {
         rarity: [...RARITY],
+        note: "Wild Card",
         quantity: 2,
         type_line: {
           "exclude": ["Land"],

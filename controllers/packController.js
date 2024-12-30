@@ -48,6 +48,7 @@ const controller = {
           rarity: dist.rarity,
           type: dist.type_line || {},
           quantity: dist.quantity,
+          note: dist.note || "",
         });
         results = results.concat(cards);
       }

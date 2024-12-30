@@ -26,6 +26,18 @@ const cardFaceSchema = new mongoose.Schema({
   }
 });
 
+const cardPricesSchema = new mongoose.Schema({
+  "usd": {
+    type: String,
+  },
+  "usd_foil": {
+    type: String,
+  },
+  "usd_etched": {
+    type: String,
+  },
+});
+
 const cardSchema = new mongoose.Schema({
   set_id: {
     type: mongoose.ObjectId,
@@ -107,6 +119,14 @@ const cardSchema = new mongoose.Schema({
   frame: {
     type: String,
     required: true,
+  },
+  prices: {
+    type: cardPricesSchema,
+    required: true,
+    default: {},
+  },
+  prices_updated_at: {
+    type: Date,
   },
 });
 

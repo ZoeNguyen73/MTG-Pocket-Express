@@ -74,7 +74,7 @@ const getSetId = async (setCode) => {
     console.error(error.message);
     process.exit(1);
   }
-}
+};
 
 const seedData = async (cardData, setCode) => {
   if (!Array.isArray(cardData) || cardData.length === 0) {
