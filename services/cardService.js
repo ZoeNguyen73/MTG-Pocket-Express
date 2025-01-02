@@ -58,7 +58,7 @@ const getRandomCards = async ({ setCode, rarity, type = {}, quantity, note }) =>
     }
     setID = set._id;
   } catch (error) {
-    next(error);
+    console.log("error:" + error.message);
   }
 
   // build the MongoDB query
