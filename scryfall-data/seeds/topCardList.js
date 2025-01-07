@@ -101,40 +101,40 @@ const TOP_CARD_LIST = {
 //       "finish": "foil"
 //     },
 //   ],
-//   "mh3": [
-//     {
-//       "scryfall_id": "c86b8a75-9e31-4a44-95b8-c83b9a49646f", // Ocelot Pride
-//       "finish": "foil"
-//     },
-//     {
-//       "scryfall_id": "f3c4fb55-5b01-4013-b7f3-d8ec3585cde2", // Tamiyo, Inquisitive Student
-//       "finish": "foil"
-//     },
-//     {
-//       "scryfall_id": "339f83ca-4f46-4246-be23-5ca4add31d81", // Ulamog, the Defiler
-//       "finish": "foil"
-//     },
-//     {
-//       "scryfall_id": "ef099f25-2b0b-4028-8490-fbc859e35f6c", // Kaalia of the Vast
-//       "finish": "foil"
-//     },
-//     {
-//       "scryfall_id": "f897d650-f1a2-4366-a025-f12c10310d96", // Ajani, Nacatl Pariah
-//       "finish": "foil"
-//     },
-//     {
-//       "scryfall_id": "4018dda4-c78b-4e8e-ab8b-391e16c4e0f7", // Sorin of House Markov
-//       "finish": "foil"
-//     },
-//     {
-//       "scryfall_id": "480bacad-abb8-41bd-9a33-08b75f4a8817", // Phlage, Titan of Fire's Fury
-//       "finish": "foil"
-//     },
-//     {
-//       "scryfall_id": "52f22229-95d4-4a84-a581-e23816db2494", // Phyrexian Tower
-//       "finish": "foil"
-//     },
-//   ],
+  "mh3": [
+    {
+      "scryfall_id": "c86b8a75-9e31-4a44-95b8-c83b9a49646f", // Ocelot Pride
+      "finish": "foil"
+    },
+    {
+      "scryfall_id": "f3c4fb55-5b01-4013-b7f3-d8ec3585cde2", // Tamiyo, Inquisitive Student
+      "finish": "foil"
+    },
+    {
+      "scryfall_id": "339f83ca-4f46-4246-be23-5ca4add31d81", // Ulamog, the Defiler
+      "finish": "foil"
+    },
+    {
+      "scryfall_id": "ef099f25-2b0b-4028-8490-fbc859e35f6c", // Kaalia of the Vast
+      "finish": "foil"
+    },
+    {
+      "scryfall_id": "f897d650-f1a2-4366-a025-f12c10310d96", // Ajani, Nacatl Pariah
+      "finish": "foil"
+    },
+    {
+      "scryfall_id": "4018dda4-c78b-4e8e-ab8b-391e16c4e0f7", // Sorin of House Markov
+      "finish": "foil"
+    },
+    {
+      "scryfall_id": "d08742bb-d980-4912-a2fd-b8edac1fe554", // Phlage, Titan of Fire's Fury
+      "finish": "foil"
+    },
+    {
+      "scryfall_id": "52f22229-95d4-4a84-a581-e23816db2494", // Phyrexian Tower
+      "finish": "foil"
+    },
+  ],
 //   "rvr": [
 //     {
 //       "scryfall_id": "2064a0d6-3739-4466-9657-be694c0eb6e1", // Cyclonic Rift
@@ -339,40 +339,40 @@ const TOP_CARD_LIST = {
 //       "finish": "foil"
 //     },
 //   ],
-  "mb2": [
-    {
-      "scryfall_id": "f531402e-681f-4439-837c-4e184efd5a49", // Urza, Lord High Artificer 355
-      "finish": "foil"
-    },
-    {
-      "scryfall_id": "a6975357-5d6c-41c8-8fd5-c1bfb34a1e84", // Oracle of the Alpha 230
-      "finish": "foil"
-    },
-    {
-      "scryfall_id": "7ea211f0-322b-4a78-8853-61eeddccdb3c", // Gix, Yawgmoth Praetor 211
-      "finish": "foil"
-    },
-    {
-      "scryfall_id": "b02605cf-ef0b-467c-a6e8-064c2e260cd6", // Titania, Protector of Argoth 204
-      "finish": "foil"
-    },
-    {
-      "scryfall_id": "99eed556-06b8-4063-8d72-24f010dd372e", // Command Tower 165
-      "finish": "foil"
-    },
-    {
-      "scryfall_id": "e5436ba2-1b89-4d1a-ab5a-6f64ded34078", // Mirri, Weatherlight Duelist 129
-      "finish": "foil"
-    },
-    {
-      "scryfall_id": "0137f066-68ec-44d1-877e-009256127ede", // Gerrard, Weatherlight Hero 108
-      "finish": "foil"
-    },
-    {
-      "scryfall_id": "c153d43d-fb7c-47cd-8796-4a0f6ff53579", // Rusko, Clockmaker 100
-      "finish": "foil"
-    },
-  ],
+  // "mb2": [
+  //   {
+  //     "scryfall_id": "f531402e-681f-4439-837c-4e184efd5a49", // Urza, Lord High Artificer 355
+  //     "finish": "foil"
+  //   },
+  //   {
+  //     "scryfall_id": "a6975357-5d6c-41c8-8fd5-c1bfb34a1e84", // Oracle of the Alpha 230
+  //     "finish": "foil"
+  //   },
+  //   {
+  //     "scryfall_id": "7ea211f0-322b-4a78-8853-61eeddccdb3c", // Gix, Yawgmoth Praetor 211
+  //     "finish": "foil"
+  //   },
+  //   {
+  //     "scryfall_id": "b02605cf-ef0b-467c-a6e8-064c2e260cd6", // Titania, Protector of Argoth 204
+  //     "finish": "foil"
+  //   },
+  //   {
+  //     "scryfall_id": "99eed556-06b8-4063-8d72-24f010dd372e", // Command Tower 165
+  //     "finish": "foil"
+  //   },
+  //   {
+  //     "scryfall_id": "e5436ba2-1b89-4d1a-ab5a-6f64ded34078", // Mirri, Weatherlight Duelist 129
+  //     "finish": "foil"
+  //   },
+  //   {
+  //     "scryfall_id": "0137f066-68ec-44d1-877e-009256127ede", // Gerrard, Weatherlight Hero 108
+  //     "finish": "foil"
+  //   },
+  //   {
+  //     "scryfall_id": "c153d43d-fb7c-47cd-8796-4a0f6ff53579", // Rusko, Clockmaker 100
+  //     "finish": "foil"
+  //   },
+  // ],
 };
 
 module.exports = TOP_CARD_LIST;
