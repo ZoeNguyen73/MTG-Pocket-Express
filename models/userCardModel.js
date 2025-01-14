@@ -20,6 +20,11 @@ const userCardSchema = new mongoose.Schema({
     required: true,
     default: 1,
   },
+  is_favourite: {
+    type: Boolean,
+    required: true,
+    default: false,
+  }
 });
 
 // unique compound index to ensure no duplicated document

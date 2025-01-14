@@ -33,6 +33,7 @@ const userCardValidationSchema = {
         "number.base": `"quantity" must be a number.`,
         "number.integer": `"quantity" must be an integer.`,
       }),
+    is_favourite: Joi.boolean(),
   }),
 };
 
