@@ -91,7 +91,13 @@ const controller = {
       }
 
       const userCards = await UserCardModel.find({ user_id: user._id })
-        .populate("card_id")
+        .populate({
+          path: "card_id",
+          populate : {
+            path: "set_id",
+            select: "_id code name icon_svg_uri"
+          }   
+        })
         .lean();
 
       for (const card of userCards) {
