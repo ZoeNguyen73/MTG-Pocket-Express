@@ -24,6 +24,11 @@ const userCardSchema = new mongoose.Schema({
     type: Boolean,
     required: true,
     default: false,
+  },
+  latest_add_time: {
+    type: Date,
+    required: true,
+    default: Date.now(),
   }
 });
 
