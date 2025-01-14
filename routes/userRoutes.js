@@ -10,17 +10,12 @@ router.put("/:username",
   userAuth.isAuthorized("Admin"),
   userController.updateByUsername
 );
-router.get("/:username/cards",
-  userAuth.isAuthenticated,
-  userAuth.isAuthorized("Admin"),
-  userController.getUserCardsByUsername
-);
-router.post("/:username/cards/favourites/add/:id",
+router.put("/:username/cards/favourites/add/:id",
   userAuth.isAuthenticated,
   userAuth.isAuthorized("Admin"),
   userController.addFavouriteUserCard
 );
-router.post("/:username/cards/favourites/remove/:id",
+router.put("/:username/cards/favourites/remove/:id",
   userAuth.isAuthenticated,
   userAuth.isAuthorized("Admin"),
   userController.removeFavouriteUserCard
@@ -29,6 +24,11 @@ router.get("/:username/cards/favourites",
   userAuth.isAuthenticated,
   userAuth.isAuthorized("Admin"),
   userController.getFavouriteUserCards
+);
+router.get("/:username/cards",
+  userAuth.isAuthenticated,
+  userAuth.isAuthorized("Admin"),
+  userController.getUserCardsByUsername
 );
 
 module.exports = router;
