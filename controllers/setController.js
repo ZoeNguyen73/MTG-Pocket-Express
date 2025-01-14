@@ -37,6 +37,15 @@ const controller = {
         .populate("card_id")
         .lean();
 
+      for (const card of topCards) {
+        let price_code = "usd";
+        if (card.finish === "foil") {
+          price_code = "usd_foil";
+        } else if (card.finish === "etched") {
+          price_code = "usd_etched";
+        }
+        card.final_price = card.card_id.prices[price_code];
+      }
       const data = { count: topCards.length, top_cards: topCards };
       return res.status(200).json(data)
 
