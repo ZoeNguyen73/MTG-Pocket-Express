@@ -1,6 +1,7 @@
 const jwt = require("jsonwebtoken");
 
 const UserModel = require("../models/userModel");
+const UserCardModel = require("../models/userCardModel");
 const UserValidator = require("../validations/userValidation");
 const RefreshTokenModel = require("../models/refreshTokenModel");
 
@@ -76,6 +77,41 @@ const controller = {
       return res.status(201).json(updatedUser);
     } catch (error) {
       error.statusCode = 400;
+      next(error);
+    }
+  },
+
+  getUserCardsByUsername: async (req, res, next) => {
+    try {
+      const user = await UserModel.findOne({ username: req.params.username });
+      if (!user) {
+        const error = new Error();
+        error.statusCode = 404;
+        throw error;
+      }
+
+      const userCards = await UserCardModel.find({ user_id: user._id })
+        .populate("card_id")
+        .lean();
+
+      for (const card of userCards) {
+        let price_code = "usd";
+        if (card.finish === "foil") {
+          price_code = "usd_foil";
+        } else if (card.finish === "etched") {
+          price_code = "usd_etched";
+        }
+        card.final_price = card.card_id.prices[price_code];
+      }
+
+      const data = { count: userCards.length, user_cards: userCards };
+      return res.status(200).json(data);
+
+    } catch (error) {
+      if (!error.statusCode) {
+        error.statusCode = 500;
+        error.details = "Error retrieving user cards data " + error.message;
+      }
       next(error);
     }
   },
