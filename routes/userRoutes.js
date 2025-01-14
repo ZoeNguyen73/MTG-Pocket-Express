@@ -15,5 +15,20 @@ router.get("/:username/cards",
   userAuth.isAuthorized("Admin"),
   userController.getUserCardsByUsername
 );
+router.post("/:username/cards/favourites/add/:id",
+  userAuth.isAuthenticated,
+  userAuth.isAuthorized("Admin"),
+  userController.addFavouriteUserCard
+);
+router.post("/:username/cards/favourites/remove/:id",
+  userAuth.isAuthenticated,
+  userAuth.isAuthorized("Admin"),
+  userController.removeFavouriteUserCard
+);
+router.get("/:username/cards/favourites",
+  userAuth.isAuthenticated,
+  userAuth.isAuthorized("Admin"),
+  userController.getFavouriteUserCards
+);
 
 module.exports = router;
