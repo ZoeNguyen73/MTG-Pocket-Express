@@ -2,6 +2,7 @@ const { getRandomCards } = require("../services/cardService");
 const BOOSTER_TYPES = require("../utils/boosterTypes");
 
 const SetModel = require("../models/setModel");
+const UserCardModel = require("../models/userCardModel");
 
 const { updateUserCard } = require("../services/userCardService");
 
@@ -59,6 +60,8 @@ const controller = {
 
         for await (const card of results) {
           try {
+            const existingCards = await UserCardModel.find({user_id, card_id: card._id});
+            if (existingCards.length === 0) card.is_new = true;
             await updateUserCard(user_id, card);
           } catch (error) {
             next(error);
