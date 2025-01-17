@@ -4,6 +4,8 @@ const SetModel = require("../models/setModel");
 const getRandomInt = require("../utils/randomUtils")
 const { FINISHES_DROP_RATE } = require("../utils/cardAttributes");
 
+const errorHandler = require("../middlewares/errorHandler");
+
 const getRandomFinish = (availableFinishes) => {
   if (availableFinishes.length === 1) {
     return availableFinishes[0];
@@ -128,4 +130,28 @@ const getRandomCards = async ({ setCode, rarity, type = {}, quantity, note }) =>
 
 };
 
-module.exports = { getRandomCards };
+const getRelatedCards = async (cardId) => {
+  try {
+    const card = await CardModel.findById(cardId);
+    if (!card) {
+      const error = new Error();
+      error.details = "Unable to find matching User Card in database";
+      error.statusCode = 404;
+      throw error;
+    }
+
+    const cardName = card.card_faces[0].name;
+
+    const relatedCards = await CardModel.find({ 
+      "card_faces.0.name": cardName,
+      _id: { $ne: cardId },
+    }).lean();
+
+    return relatedCards;
+
+  } catch (error) {
+    errorHandler(error);
+  }
+};
+
+module.exports = { getRandomCards, getRelatedCards };

@@ -8,6 +8,7 @@ const authRouter = require("./routes/authRoutes");
 const userRouter = require("./routes/userRoutes");
 const packRouter = require("./routes/packRoutes");
 const setRouter = require("./routes/setRoutes");
+const userCardRouter = require("./routes/userCardRoutes");
 
 const notFoundHandler = require("./middlewares/notFoundHandler");
 const errorHandler = require("./middlewares/errorHandler");
@@ -25,6 +26,7 @@ app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/packs", packRouter);
 app.use("/api/v1/sets", setRouter);
+app.use("/api/v1/user-cards", userCardRouter);
 
 // Handle 404 errors
 app.use(notFoundHandler);
