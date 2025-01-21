@@ -24,7 +24,7 @@ const controller = {
       }
 
       if (card.finish === "foil") {
-        card.final_price = card.card_id.prices["usd_foiled"];
+        card.final_price = card.card_id.prices["usd_foil"];
       } else if (card.finish === "etched") {
         card.final_price = card.card_id.prices["usd_etched"];
       } else {
@@ -41,7 +41,7 @@ const controller = {
         for await (const card of relatedCards) {
           const card_id = card._id;
           const matchingUserCard = await UserCardModel.find({ user_id, card_id });
-          if (matchingUserCard) card.is_owned = true;
+          card.is_owned = matchingUserCard.length > 0;
           related_cards.push(card);
         }
       }
