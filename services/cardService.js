@@ -4,6 +4,8 @@ const SetModel = require("../models/setModel");
 const getRandomInt = require("../utils/randomUtils")
 const { FINISHES_DROP_RATE } = require("../utils/cardAttributes");
 
+const errorHandler = require("../middlewares/errorHandler");
+
 const getRandomFinish = (availableFinishes) => {
   if (availableFinishes.length === 1) {
     return availableFinishes[0];
@@ -40,7 +42,7 @@ const getRandomFinish = (availableFinishes) => {
  * @returns {Object} A random card that matches the query criteria.
 */
 
-const getRandomCards = async ({ setCode, rarity, type = {}, quantity }) => {
+const getRandomCards = async ({ setCode, rarity, type = {}, quantity, note }) => {
   // validate the required parammeters
   if (!setCode || !rarity || !rarity.length) {
     throw new Error("setCode and rarity are required parameters.");
@@ -58,7 +60,7 @@ const getRandomCards = async ({ setCode, rarity, type = {}, quantity }) => {
     }
     setID = set._id;
   } catch (error) {
-    next(error);
+    console.log("error:" + error.message);
   }
 
   // build the MongoDB query
@@ -114,7 +116,13 @@ const getRandomCards = async ({ setCode, rarity, type = {}, quantity }) => {
     }
 
     const finish = getRandomFinish(finishes);
-    generatedCards.push({ ...card.toObject(), finish });
+    let price_code = "usd";
+    if (finish === "foil") {
+      price_code = "usd_foil";
+    } else if (finish === "etched") {
+      price_code = "usd_etched";
+    }
+    generatedCards.push({ ...card.toObject(), finish, note, final_price: card.prices[price_code] });
 
   }
 
@@ -122,4 +130,28 @@ const getRandomCards = async ({ setCode, rarity, type = {}, quantity }) => {
 
 };
 
-module.exports = { getRandomCards };
+const getRelatedCards = async (cardId) => {
+  try {
+    const card = await CardModel.findById(cardId);
+    if (!card) {
+      const error = new Error();
+      error.details = "Unable to find matching User Card in database";
+      error.statusCode = 404;
+      throw error;
+    }
+
+    const cardName = card.card_faces[0].name;
+
+    const relatedCards = await CardModel.find({ 
+      "card_faces.0.name": cardName,
+      _id: { $ne: cardId },
+    }).lean();
+
+    return relatedCards;
+
+  } catch (error) {
+    errorHandler(error);
+  }
+};
+
+module.exports = { getRandomCards, getRelatedCards };

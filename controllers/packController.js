@@ -2,6 +2,7 @@ const { getRandomCards } = require("../services/cardService");
 const BOOSTER_TYPES = require("../utils/boosterTypes");
 
 const SetModel = require("../models/setModel");
+const UserCardModel = require("../models/userCardModel");
 
 const { updateUserCard } = require("../services/userCardService");
 
@@ -48,20 +49,26 @@ const controller = {
           rarity: dist.rarity,
           type: dist.type_line || {},
           quantity: dist.quantity,
+          note: dist.note || "",
         });
         results = results.concat(cards);
       }
 
-      const user_id = req.authUser.userID;
+      // update userCard if the user is not guest
+      if (req.authUser !== "guest") {
+        const user_id = req.authUser.userID;
 
-      for await (const card of results) {
-        try {
-          await updateUserCard(user_id, card);
-        } catch (error) {
-          next(error);
+        for await (const card of results) {
+          try {
+            const existingCards = await UserCardModel.find({user_id, card_id: card._id});
+            if (existingCards.length === 0) card.is_new = true;
+            await updateUserCard(user_id, card);
+          } catch (error) {
+            next(error);
+          }
         }
       }
-
+      
       const data = {
         set,
         card_quantity: results.length,

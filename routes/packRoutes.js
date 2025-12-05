@@ -8,7 +8,7 @@ const router = express.Router();
 
 router.post(
   "/open/set/:setCode/type/:packType",
-  userAuth.isAuthenticated, 
+  userAuth.isOptionalAuthenticated, 
   packController.open
 );
 

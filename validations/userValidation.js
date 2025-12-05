@@ -17,7 +17,7 @@ const userValidationSchema = {
     username: Joi.string().alphanum().min(3).max(30),
     email: Joi.string()
       .email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } }),
-    avatar: Joi.string().alphanum(),
+    avatar: Joi.string().regex(/^[a-zA-Z0-9_]+$/),
   }),
 };
 

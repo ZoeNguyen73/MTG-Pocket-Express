@@ -20,6 +20,16 @@ const userCardSchema = new mongoose.Schema({
     required: true,
     default: 1,
   },
+  is_favourite: {
+    type: Boolean,
+    required: true,
+    default: false,
+  },
+  latest_add_time: {
+    type: Date,
+    required: true,
+    default: Date.now(),
+  }
 });
 
 // unique compound index to ensure no duplicated document

@@ -1,6 +1,8 @@
 const UserCardModel = require("../models/userCardModel");
 const UserCardValidator = require("../validations/userCardValidation");
 
+const errorHandler = require("../middlewares/errorHandler");
+
 const updateUserCard = async (user_id, card, quantity = 1) => {
   const card_id = card._id.toString();
   const finish = card.finish;
@@ -17,13 +19,22 @@ const updateUserCard = async (user_id, card, quantity = 1) => {
   }
 
   try {
-    await UserCardModel.updateOne(
-      { user_id, card_id, finish },
-      { $inc: { quantity } },
-      { upsert: true }
-    )
+    if (quantity > 0) {
+      await UserCardModel.updateOne(
+        { user_id, card_id, finish },
+        { $inc: { quantity }, latest_add_time: Date.now() },
+        { upsert: true }
+      )
+    } else {
+      await UserCardModel.updateOne(
+        { user_id, card_id, finish },
+        { $inc: { quantity } },
+        { upsert: true }
+      )
+    }
+    
   } catch (error) {
-    next(error);
+    errorHandler(error);
   }
 };
 
@@ -59,12 +70,12 @@ const transferUserCard = async (fromUserId, toUserId, card_id, finish, transferQ
 
     await UserCardModel.updateOne(
       { user_id: toUserId, card_id, finish },
-      { $inc: { quantity: transferQuantity } },
+      { $inc: { quantity: transferQuantity }, latest_add_time: Date.now() },
       { upsert: true }
     );
 
   } catch (error) {
-    next(error);
+    errorHandler(error);
   }
 };
 

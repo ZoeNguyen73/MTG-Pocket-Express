@@ -5,12 +5,12 @@ const UserModel = require("../models/userModel");
 const UserValidator = require("../validations/userValidation");
 const RefreshTokenModel = require("../models/refreshTokenModel");
 
-const createAccessToken = (username) => {
+const createAccessToken = (username, roles) => {
   const accessToken = jwt.sign(
     {
       // accessToken expiring in 15 minutes
       exp: Math.floor(Date.now() / 1000) + 60 * 15,
-      data: { username },
+      data: { username, roles },
     },
     process.env.JWT_SECRET_ACCESS
   );
@@ -88,7 +88,7 @@ const controller = {
       user = await UserModel.findOne({ username: validatedResults. username});
       if (!user) {
         const error = new Error();
-        error.statusCode = 404;
+        error.statusCode = 401;
         error.details = errMsg;
         throw error;
       }
@@ -105,9 +105,9 @@ const controller = {
         throw error;
       }
 
-      const username = user.username;
+      const { username, roles } = user;
 
-      const accessToken = createAccessToken(username);
+      const accessToken = createAccessToken(username, roles);
 
       const refreshToken = jwt.sign(
         {
@@ -150,7 +150,9 @@ const controller = {
           throw error;
         }
 
-        const newAccessToken = createAccessToken(username);
+        const { roles } = user;
+
+        const newAccessToken = createAccessToken(username, roles);
         return res.json({ accessToken: newAccessToken });
       }
 

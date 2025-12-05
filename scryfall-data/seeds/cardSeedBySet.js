@@ -25,7 +25,7 @@ const connectDb = async () => {
 };
 
 const getCardDataBySet = async (setCode) => {
-  const api = CARD_SEARCH_BY_SET_API + setCode;
+  const api = CARD_SEARCH_BY_SET_API + setCode + "&unique=prints";
   let data = [];
   let response = null;
 
@@ -74,7 +74,7 @@ const getSetId = async (setCode) => {
     console.error(error.message);
     process.exit(1);
   }
-}
+};
 
 const seedData = async (cardData, setCode) => {
   if (!Array.isArray(cardData) || cardData.length === 0) {
@@ -94,6 +94,7 @@ const seedData = async (cardData, setCode) => {
     if (layoutCardFaceMapping[card.layout] === 1) {
       const face = {
         name: card.name,
+        image_small: card.image_uris.small,
         image_png: card.image_uris.png,
         image_jpg_normal: card.image_uris.normal,
         image_border_crop: card.image_uris.border_crop,
@@ -106,6 +107,7 @@ const seedData = async (cardData, setCode) => {
         const data = card.card_faces[i];
         const face = {
           name: data.name,
+          image_small: data.image_uris.small,
           image_png: data.image_uris.png,
           image_jpg_normal: data.image_uris.normal,
           image_border_crop: data.image_uris.border_crop,
