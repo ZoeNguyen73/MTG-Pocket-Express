@@ -57,6 +57,10 @@ const cardSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  released_at: {
+    type: String,
+    required: true,
+  },
   layout: {
     type: String,
     required: true,
