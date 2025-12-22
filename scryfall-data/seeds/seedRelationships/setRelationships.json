@@ -1,0 +1,123 @@
+[
+  {
+    "parent_set_code": "TLA",
+    "child_set_code": "TLE",
+    "relationship_type": "other",
+    "is_active": true,
+    "rules": {
+      "released_at_match_parent": false,
+      "allowed_card_ids": [],
+      "excluded_card_ids": []
+    }
+  },
+  {
+    "parent_set_code": "EOE",
+    "child_set_code": "SPG",
+    "relationship_type": "special_guest",
+    "is_active": true,
+    "rules": {
+      "released_at_match_parent": true,
+      "allowed_card_ids": [],
+      "excluded_card_ids": []
+    }
+  },
+  {
+    "parent_set_code": "EOE",
+    "child_set_code": "EOS",
+    "relationship_type": "bonus_sheet",
+    "is_active": true,
+    "rules": {
+      "released_at_match_parent": true,
+      "allowed_card_ids": [],
+      "excluded_card_ids": []
+    }
+  },
+  {
+    "parent_set_code": "SPM",
+    "child_set_code": "SPE",
+    "relationship_type": "other",
+    "is_active": true,
+    "rules": {
+      "released_at_match_parent": true,
+      "allowed_card_ids": [],
+      "excluded_card_ids": []
+    }
+  },
+  {
+    "parent_set_code": "SPM",
+    "child_set_code": "MAR",
+    "relationship_type": "special_guest",
+    "is_active": true,
+    "rules": {
+      "released_at_match_parent": true,
+      "allowed_card_ids": [],
+      "excluded_card_ids": []
+    }
+  },
+  {
+    "parent_set_code": "FIN",
+    "child_set_code": "FCA",
+    "relationship_type": "special_guest",
+    "is_active": true,
+    "rules": {
+      "released_at_match_parent": true,
+      "allowed_card_ids": [],
+      "excluded_card_ids": []
+    }
+  },
+  {
+    "parent_set_code": "TDM",
+    "child_set_code": "SPG",
+    "relationship_type": "special_guest",
+    "is_active": true,
+    "rules": {
+      "released_at_match_parent": true,
+      "allowed_card_ids": [],
+      "excluded_card_ids": []
+    }
+  },
+  {
+    "parent_set_code": "DSK",
+    "child_set_code": "SPG",
+    "relationship_type": "special_guest",
+    "is_active": true,
+    "rules": {
+      "released_at_match_parent": true,
+      "allowed_card_ids": [],
+      "excluded_card_ids": []
+    }
+  },
+  {
+    "parent_set_code": "BLB",
+    "child_set_code": "SPG",
+    "relationship_type": "special_guest",
+    "is_active": true,
+    "rules": {
+      "released_at_match_parent": true,
+      "allowed_card_ids": [],
+      "excluded_card_ids": []
+    }
+  },
+  {
+    "parent_set_code": "FDN",
+    "child_set_code": "SPG",
+    "relationship_type": "special_guest",
+    "is_active": true,
+    "rules": {
+      "released_at_match_parent": true,
+      "allowed_card_ids": [],
+      "excluded_card_ids": []
+    }
+  },
+  {
+    "parent_set_code": "MH3",
+    "child_set_code": "SPG",
+    "relationship_type": "special_guest",
+    "is_active": true,
+    "rules": {
+      "released_at_match_parent": true,
+      "allowed_card_ids": [],
+      "excluded_card_ids": []
+    }
+  }
+]
