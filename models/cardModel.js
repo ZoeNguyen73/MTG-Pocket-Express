@@ -132,6 +132,27 @@ const cardSchema = new mongoose.Schema({
   prices_updated_at: {
     type: Date,
   },
+
+  pack_eligibility: {
+    // which pack types this card can appear in and in which finish
+    // this is optional
+    type: new mongoose.Schema(
+      pack_types: {
+        type: [String],
+        enum: ["play_booster", "collector_booster"],
+        default: undefined, // treat as no special eligibility logic
+      },
+
+      finishes_by_product: {
+        play_booster: { type: [String], enum: ["nonfoil", "foil", "etched"], default: undefined },
+        collector_booster: { type: [String], enum: ["nonfoil", "foil", "etched"], default: undefined },
+      },
+
+      override_reason: { type: String, default: "" },
+    ),
+    default: undefined,
+    
+  }
 });
 
 const CardModel = mongoose.model("Card", cardSchema);
