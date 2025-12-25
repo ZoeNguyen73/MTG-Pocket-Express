@@ -136,23 +136,19 @@ const cardSchema = new mongoose.Schema({
   pack_eligibility: {
     // which pack types this card can appear in and in which finish
     // this is optional
-    type: new mongoose.Schema(
-      pack_types: {
-        type: [String],
-        enum: ["play_booster", "collector_booster"],
-        default: undefined, // treat as no special eligibility logic
-      },
+    pack_types: {
+      type: [String],
+      enum: ["play_booster", "collector_booster"],
+      default: undefined, // treat as no special eligibility logic
+    },
 
-      finishes_by_product: {
-        play_booster: { type: [String], enum: ["nonfoil", "foil", "etched"], default: undefined },
-        collector_booster: { type: [String], enum: ["nonfoil", "foil", "etched"], default: undefined },
-      },
+    finishes_by_pack_types: {
+      play_booster: { type: [String], enum: ["nonfoil", "foil", "etched"], default: undefined },
+      collector_booster: { type: [String], enum: ["nonfoil", "foil", "etched"], default: undefined },
+    },
 
-      override_reason: { type: String, default: "" },
-    ),
-    default: undefined,
-    
-  }
+    override_reason: { type: String, default: "" },
+  },
 });
 
 const CardModel = mongoose.model("Card", cardSchema);

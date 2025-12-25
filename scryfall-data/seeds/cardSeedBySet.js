@@ -7,7 +7,9 @@ const SetModel = require("../../models/setModel");
 
 const SET_LIST = require("./setList");
 const CARD_SEARCH_BY_SET_API = "https://api.scryfall.com/cards/search?q=set%3D";
+const SPG_CARD_SEARCH_BY_RELEASE_DATE_API = "https://api.scryfall.com/cards/search?q=set%3Aspg+date%3D";
 const layoutCardFaceMapping = require("../../utils/cardLayoutsMapping");
+const { eligible_cards_by_set, DEFAULT_FINISH } = require("./specialElegibility");
 
 const connectDb = async () => {
   try {
@@ -16,7 +18,7 @@ const connectDb = async () => {
       throw new Error("MONGO_DB_STRING is not defined in the environment variables.");
     }
 
-    await mongoose.connect(process.env.MONGO_DB_STRING, { dbName: "MTG-Pocket" });
+    await mongoose.connect(process.env.MONGO_DB_STRING, { dbName: process.env.DB_NAME });
     console.log("Connected to DB");
   } catch (error) {
     console.log(`Failed to connect to DB: ${error}`);
@@ -24,8 +26,14 @@ const connectDb = async () => {
   }
 };
 
-const getCardDataBySet = async (setCode) => {
-  const api = CARD_SEARCH_BY_SET_API + setCode + "&unique=prints";
+const getCardDataBySet = async (setCode, releaseDateStr = null) => {
+  let api = null;
+  if (setCode === "spg" && releaseDateStr) {
+    api = SPG_CARD_SEARCH_BY_RELEASE_DATE_API + releaseDateStr + "&unique=prints";
+  } else {
+    api = CARD_SEARCH_BY_SET_API + setCode + "&unique=prints";
+  }
+
   let data = [];
   let response = null;
 
@@ -87,6 +95,14 @@ const seedData = async (cardData, setCode) => {
   } catch (error) {
     console.error(error.message);
   }
+
+  const spg_pack_eligibility = {
+    pack_types: ["play_booster", "collector_booster"],
+    finishes_by_pack_types: {
+      play_booster: ["nonfoil"],
+      collector_booster: ["foil", "etched"],
+    }
+  }
   
   const formattedCards = cardData.map(card => {
     const card_faces = [];
@@ -122,6 +138,7 @@ const seedData = async (cardData, setCode) => {
       scryfall_id: card.id,
       lang: card.lang,
       scryfall_uri: card.scryfall_uri,
+      released_at: card.released_at,
       layout: card.layout,
       card_faces,
       highres_image: card.highres_image,
@@ -140,6 +157,24 @@ const seedData = async (cardData, setCode) => {
       set_id: setId,
     };
 
+    if (setCode === "spg") {
+      formattedCard.pack_eligibility = spg_pack_eligibility;
+
+    } else {
+      // check against specialElegibility file
+      const setEligibility = eligible_cards_by_set[setCode];
+      if (!setEligibility) return formattedCard;
+      for (const e of setEligibility) {
+        if (e.cards?.length > 0 && e.cards.includes(formattedCard.scryfall_id)) {
+          const pack_types = e.pack_types ? [...e.pack_types] : undefined;
+          const finishes_by_pack_types = e.finish ? {...e.finish} : DEFAULT_FINISH;
+
+          formattedCard.pack_eligibility = {pack_types, finishes_by_pack_types};
+        }
+
+      }
+    }
+
     return formattedCard;
     
   });
@@ -157,10 +192,18 @@ const seed = async () => {
 
   console.log("Cards data seeding...");
 
-  for await (const setCode of SET_LIST) {
+  for await (const set of SET_LIST) {
     try {
-      const data = await getCardDataBySet(setCode);
-      await seedData(data, setCode);
+      const { code, hasSpg } = set;
+
+      const mainSetData = await getCardDataBySet(code);
+      await seedData(mainSetData, code);
+      if (hasSpg) {
+        const releaseDateStr = mainSetData[0].released_at;
+        const spgSetData = await getCardDataBySet("spg", releaseDateStr);
+        await seedData(spgSetData, "spg");
+      }
+      
     } catch (error) {
       process.exit(1);
     }
