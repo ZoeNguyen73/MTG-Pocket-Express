@@ -62,6 +62,7 @@ const getCardDataBySet = async (setCode, releaseDateStr = null) => {
       data = data.concat(response.data.data);
     }
 
+    console.log("Cards data successfully retrieved from scryfall for set code: " + setCode);
     return data;
     
   } catch (error) {
@@ -84,14 +85,17 @@ const getSetId = async (setCode) => {
   }
 };
 
-const seedData = async (cardData, setCode) => {
+const seedData = async (cardData, setCode, collectorOnly = false) => {
   if (!Array.isArray(cardData) || cardData.length === 0) {
     throw new Error("Card data is empty or invalid.");
   }
 
+  console.log("carData received in seedData: " + cardData.length + " cards");
+
   let setId = null;
   try {
     setId = await getSetId(setCode);
+    console.log("setID retrieved from db: " + setId)
   } catch (error) {
     console.error(error.message);
   }
@@ -106,7 +110,7 @@ const seedData = async (cardData, setCode) => {
   
   const formattedCards = cardData.map(card => {
     const card_faces = [];
-    
+
     if (layoutCardFaceMapping[card.layout] === 1) {
       const face = {
         name: card.name,
@@ -118,6 +122,7 @@ const seedData = async (cardData, setCode) => {
         type_line: card.type_line,
       };
       card_faces.push(face);
+
     } else if (layoutCardFaceMapping[card.layout] > 1) {
       for (let i = 0; i < card.card_faces.length; i++) {
         const data = card.card_faces[i];
@@ -163,16 +168,23 @@ const seedData = async (cardData, setCode) => {
     } else {
       // check against specialElegibility file
       const setEligibility = eligible_cards_by_set[setCode];
-      if (!setEligibility) return formattedCard;
-      for (const e of setEligibility) {
-        if (e.cards?.length > 0 && e.cards.includes(formattedCard.scryfall_id)) {
-          const pack_types = e.pack_types ? [...e.pack_types] : undefined;
-          const finishes_by_pack_types = e.finish ? {...e.finish} : DEFAULT_FINISH;
+      if (setEligibility && setEligibility.length > 0) {
+        for (const e of setEligibility) {
+          if (e.cards?.length > 0 && e.cards.includes(formattedCard.scryfall_id)) {
+            const pack_types = e.pack_types ? [...e.pack_types] : undefined;
+            const finishes_by_pack_types = e.finish ? {...e.finish} : DEFAULT_FINISH;
 
-          formattedCard.pack_eligibility = {pack_types, finishes_by_pack_types};
+            formattedCard.pack_eligibility = {pack_types, finishes_by_pack_types};
+          }
         }
-
       }
+
+      // check if collectorOnly
+      if (collectorOnly) {
+        formattedCard.pack_eligibility = formattedCard.pack_eligibility ?? {};
+        formattedCard.pack_eligibility.pack_types = ["collector_booster"];
+      }
+      
     }
 
     return formattedCard;
@@ -194,10 +206,10 @@ const seed = async () => {
 
   for await (const set of SET_LIST) {
     try {
-      const { code, hasSpg } = set;
-
+      const { code, hasSpg, collectorOnly } = set;
+      console.log("set to be seeded: " + JSON.stringify(set));
       const mainSetData = await getCardDataBySet(code);
-      await seedData(mainSetData, code);
+      await seedData(mainSetData, code, collectorOnly);
       if (hasSpg) {
         const releaseDateStr = mainSetData[0].released_at;
         const spgSetData = await getCardDataBySet("spg", releaseDateStr);

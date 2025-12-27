@@ -4,8 +4,10 @@
 
 const SET_LIST = [
   // { code: "fdn", hasSpg: true }, // Foundations
-  { code: "dsk", hasSpg: true }, // Duskmourn
-  // "blb", // Bloomburrow
+  // { code: "dsk", hasSpg: true }, // Duskmourn
+  // { code: "dsc", hasSpg: false, collectorOnly: true, }, // Duskmourn commander expansion
+  { code: "blb", hasSpg: true, collectorOnly: false }, // Bloomburrow
+  { code: "blc", hasSpg: false, collectorOnly: true }, // Bloomburrow commander expansion
   // "mh3", // Modern Horizons 3
   // "rvr", // Ravnica Remastered
   // "lci", // The Lost Caverns of Ixalan

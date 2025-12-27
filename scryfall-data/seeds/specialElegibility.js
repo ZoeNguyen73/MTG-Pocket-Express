@@ -95,6 +95,91 @@ const eligible_cards_by_set = {
         "c7913c8f-a374-4d12-8ec9-8aee7604e135", // kellan, planar trailblazer
       ]
     }
+  ],
+
+  "dsk": [
+    // japanese showcases - collector only
+    {
+      finish: null,
+      pack_types: ["collector_booster"],
+      cards: [
+        "8a8c711f-f29f-4f6a-88c4-3dbf9ce471c3", // enduring vitality
+        "2999c030-66c1-41f3-b59a-8ba1ef5a756c",
+        "49df3de4-ed62-4828-8256-a05220d9eada", // overlord of the balemurk
+        "49993a18-f733-4d1f-b629-12fc45cbb327",
+        "f9f3ecff-2d67-4676-8706-9191d67215fc", // overlord of the hauntwoods
+        "5033440c-7d52-4f2c-bc62-ccd6d587d528",
+        "d1c10e8d-b393-41fd-ba31-5e39b2dc7cce", // enduring curiosity
+        "86b3b6b0-ad74-43d1-bf2d-fc830214bdb4",
+        "b07d4d21-2a88-4cfc-b0ce-9def76c20b7d", // enduring courage
+        "82c7fa72-3c5f-49db-95f0-9a1c5d404651",
+        "59b698d6-4107-45d3-bc27-fb0746b7f91a", // enduring tenacity
+        "e74a0fbc-7150-4c44-983f-ac31e74644fd",
+        "dc36adbc-544c-46a1-9e99-92cc7b2b2af1", // enduring innocence
+        "7aca1ee8-c1ae-4052-b9d0-1a2903f61c88",
+        "5b2c4873-dfa7-4dd8-aded-a5d1b6048ad7", // overlord of the mistmoors
+        "1951ed76-16a1-4639-b824-08dfc3d6d098",
+        "0e8c085e-db0e-45a8-96d0-80b480361771", // overlord of the boilerbilges
+        "8607011b-0222-47c2-a537-b817dff93541",
+        "bf42de20-43af-4c37-a5af-aa7c48699596", // overlord of the floodpits
+        "3194a6f4-f994-494c-aa29-1de8af48a3f1",
+      ],
+    },
+    // textured foil double exposure card - collector booster only
+    {
+      finish: null,
+      pack_types: ["collector_booster"],
+      cards: [
+        "497ec48f-5e6a-4f57-86ca-3640b7235002", // Valgavoth, terror eater
+        "14901700-881a-4c79-b162-aeeb1579757e", // kaito, bane of nightmares
+        "a9a4f2ba-2d16-4dda-85e8-dafce0d5ee1b", // the wandering rescuer
+        "a54c9d18-76d7-4c24-ab19-7ad57d9a33a4", // niko, light of hope
+        "bd10920a-25b2-4191-b7f2-c43dbd1c5cc5", // tyvar, the pummeler
+      ],
+    },
+  ],
+
+  "blb": [
+    // japanese anime showcases - collector only
+    {
+      finish: null,
+      pack_types: ["collector_booster"],
+      cards: [
+        "8487cfce-2b73-4082-a1f2-dea263811516", // lumra, bellow of the woods
+        "0b511524-e628-41d4-b0dc-d98961d4e9e1", // baylen, the haymaker
+        "af6c496c-c70e-46f0-b161-661620767de5", // ral, crackling wit
+        "88ca7c86-92d8-4a24-81b1-9eb11392160d", // vren, the relentless
+        "4ad70a0b-3845-4b92-9c15-985a3fe0e1f2", // gev, scaled scorch
+        "44f59ece-1ba5-422b-820d-e80c83f46290", // camellia, the seedmiser
+        "f4d99aec-c114-4287-ab61-a34e5adab5ab", // finneas, ace archer
+        "34ace81d-823f-43d1-902e-345418cd8fd2", // alania, divergent storm
+        "34690573-d8d6-471e-9878-cf5d931d9f55", // zoarline, cosmos caller
+        "cfbdaae3-acba-44e1-bdd6-9c7066143d33", // mabel, heir to cragflame
+        "26b4e695-5ec4-4821-8637-8df501ba0653", // muerra, trash tactician
+        "2f6d51dc-ca49-417c-8b5a-fcb5cd669c6f", // kastral, the windcrested
+        "16dfe689-83d4-4dcb-810c-d618a39c5ab9", // clement, the worrywort
+      ],
+    },
+    // 13 extended art rare - collector only
+    {
+      finish: { collector_booster: ["nonfoil", "foil"] },
+      pack_types: ["collector_booster"],
+      cards: [
+        "bbd5c86a-0991-4322-a0a2-48424c4be2af", // essence channeler
+        "56301392-3496-48d0-8d91-6b82e1164c98", // fecund greenshell
+        "4396e4c7-660d-4055-bc94-4ccea95223b7", // lunar convocation
+        "1f2efb27-c181-43f7-93fe-a8c4d286f8ad", // dreamdew entrancer
+        "73a10a11-a21f-4e93-8771-8d971c158911", // hearthborn battler
+        "3aebd0f9-fa08-407f-b3d3-fb4b13b1ea97", // byway barterer
+        "e054e77f-94b9-4c43-94a4-75a7a5d1bd30", // wishing well
+        "12f3b75d-87d6-42dc-8096-41f5480b12fa", // kitnap
+        "0bda8a2e-6bf1-4d8c-b71b-bbc8d8130fff", // fabled passage
+        "859e34b4-6762-465f-a5c7-24e42e112fbe", // iridescent vinelasher
+        "22ffe1ab-df93-4017-bb29-bb214c86d73a", // thornvault forager
+        "dd04367b-59d8-4ee6-8b5a-abfb1373c226", // fountainport
+        "7fc5b558-4470-4bd7-9458-fbd275ded168", // pawpatch recruit
+      ],
+    }
   ]
 };
 

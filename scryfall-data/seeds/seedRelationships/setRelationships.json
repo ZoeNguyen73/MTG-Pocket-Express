@@ -119,5 +119,27 @@
       "allowed_card_ids": [],
       "excluded_card_ids": []
     }
+  },
+  {
+    "parent_set_code": "BLB",
+    "child_set_code": "BLC",
+    "relationship_type": "commander",
+    "is_active": true,
+    "rules": {
+      "released_at_match_parent": true,
+      "allowed_card_ids": [],
+      "excluded_card_ids": []
+    }
+  },
+  {
+    "parent_set_code": "DSK",
+    "child_set_code": "DSC",
+    "relationship_type": "commander",
+    "is_active": true,
+    "rules": {
+      "released_at_match_parent": true,
+      "allowed_card_ids": [],
+      "excluded_card_ids": []
+    }
   }
 ]
