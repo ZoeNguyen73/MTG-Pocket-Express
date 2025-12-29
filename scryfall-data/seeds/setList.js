@@ -3,17 +3,17 @@
 // ];
 
 const SET_LIST = [
-  // { code: "fdn", hasSpg: true }, // Foundations
-  // { code: "dsk", hasSpg: true }, // Duskmourn
+  { code: "fdn", hasSpg: true, collectorOnly: false }, // Foundations
+  // { code: "dsk", hasSpg: true, collectorOnly: false }, // Duskmourn
   // { code: "dsc", hasSpg: false, collectorOnly: true, }, // Duskmourn commander expansion
   // { code: "blb", hasSpg: true, collectorOnly: false }, // Bloomburrow
   // { code: "blc", hasSpg: false, collectorOnly: true }, // Bloomburrow commander expansion
   // { code: "eoe", hasSpg: true, collectorOnly: false }, // Edge of Eternities
   // { code: "eos", hasSpg: false, collectorOnly: false }, // EOE stellar sights
   // { code: "eoc", hasSpg: false, collectorOnly: true }, // Edge of Eternities commander
-  { code: "fin", hasSpg: false, collectorOnly: false }, // Final Fantasy
-  { code: "fca", hasSpg: false, collectorOnly: false }, // Final Fantasy expansion
-  { code: "fic", hasSpg: false, collectorOnly: true }, // Final Fantasy commander
+  // { code: "fin", hasSpg: false, collectorOnly: false }, // Final Fantasy
+  // { code: "fca", hasSpg: false, collectorOnly: false }, // Final Fantasy expansion
+  // { code: "fic", hasSpg: false, collectorOnly: true }, // Final Fantasy commander
   // "mh3", // Modern Horizons 3
   // "rvr", // Ravnica Remastered
   // "lci", // The Lost Caverns of Ixalan

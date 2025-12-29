@@ -159,7 +159,8 @@ const seedData = async (cardData, setCode, collectorOnly = false) => {
       booster: card.booster,
       rarity: card.rarity,
       frame: card.frame,
-      promo_types: [...card.promo_types],
+      promo_types: card.promo_types && Array.isArray(card.promo_types) ? [...card.promo_types] : [],
+      pack_eligibility: {},
       set_id: setId,
     };
 
