@@ -132,6 +132,10 @@ const cardSchema = new mongoose.Schema({
   prices_updated_at: {
     type: Date,
   },
+  promo_types: {
+    type: [String],
+    default: [],
+  },
 
   pack_eligibility: {
     // which pack types this card can appear in and in which finish

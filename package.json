@@ -11,7 +11,8 @@
     "seed-card": "node scryfall-data/seeds/cardSeedBySet.js",
     "seed-top-card": "node scryfall-data/seeds/topCardSeed.js",
     "seed-prices": "node scryfall-data/seeds/pricesSeed.js",
-    "seed-relationships": "node scryfall-data/seeds/seedSetRelationships.js"
+    "seed-relationships": "node scryfall-data/seeds/seedSetRelationships.js",
+    "simplify-cards": "node scryfall-data/seeds/seedRelationships/simplifyChildSetCards.js"
   },
   "author": "",
   "license": "ISC",

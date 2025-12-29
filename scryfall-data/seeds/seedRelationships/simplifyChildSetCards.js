@@ -2,7 +2,7 @@ const path = require("path");
 const fs = require("fs");
 const { Readable } = require("stream");
 
-const CHILD_SET_CARDS_DATA_FILENAME = "tleSetCards";
+const CHILD_SET_CARDS_DATA_FILENAME = "ficExtendedArtCards";
 const INPUT_PATH = path.join(__dirname, `./${CHILD_SET_CARDS_DATA_FILENAME}.json`);
 
 const simplifyChildSetCardsData = () => {
@@ -14,10 +14,7 @@ const simplifyChildSetCardsData = () => {
   const parsed = JSON.parse(raw);
 
   const cardsArr = parsed.data ?? [];
-  const simplifiedArr = cardsArr.map((card) => ({
-    scryfall_id: card.id,
-    name: card.name,
-  }));
+  const simplifiedArr = cardsArr.map(card => card.id);
 
   fs.writeFileSync(outputPath, JSON.stringify(simplifiedArr, null, 2), "utf8");
   console.log(`Successfully simplified card data to ${outputPath}`);
