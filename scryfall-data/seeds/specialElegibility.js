@@ -818,6 +818,291 @@ const eligible_cards_by_set = {
       ]
     },
 
+    // chocobo bundle only
+    {
+      finish: null,
+      pack_types: ["chocobo_holiday_bundle"],
+      cards: [
+        // chocobotrack foil
+        "aa1bd238-a9f5-4145-9668-eb49a3b4c2bf",
+        "b39a7df7-12b8-4537-9f17-25dfc6d2a5c6",
+        "8a38634f-a100-4493-87c3-0ecc51ca565d",
+        "356432cf-a17c-4147-9d02-921960032d0e",
+        "0a45560e-ce25-45a5-aa43-aa33d1964cd8",
+        "95ef40f4-7d88-4fb6-bfdd-8d07c96e4ff8",
+        "af4481b1-43b0-43e6-a9ea-f4ec0a551e61",
+        "99cb1ba3-e16b-414d-8682-fb3b2f350ea2",
+        "f8ed092f-3a85-45d5-b986-2d400d6e1bad",
+        "9a58d03b-1b47-4d3c-9d8a-18f20c8f978b",
+        "a8d4a0cf-9bbc-43da-a88c-47cb43fe13af",
+        "b62cd4af-7d7a-4b0b-b2d6-2086281c7b21",
+        "4790a887-26dd-4a5f-9b85-10346cb6328b",
+        "6c0ea7e6-0659-4944-a997-f46e00340542",
+        "545c98b3-dc78-4070-8dcb-f6a246abce09",
+        "8e036ebd-1749-4c41-9840-8dc5f69d6c86",
+        "f8417267-c953-4d58-8a9e-af3d0da01509",
+        // scenebox
+        "be6ba2e4-e657-4a2d-8f5f-255376d861b3", // vivi's persistence
+        "c358af5d-61e3-4c4d-9d7d-2f3e43210339", // brilliant wings
+        "2327bf49-348c-44e5-9a6b-97ef1c810079", // judgment of alexander
+        "9adaef20-1d82-4941-b4bb-a037cf3d63db", // search for dagger
+        "daecaf9c-f327-435a-963b-a4631b6cca5c", // mega flare
+        "00ef8f06-dfcc-4ffa-a054-b0c81b39dcc0", // amarant coral
+        "b2a1b5b3-8d7a-4614-b7f9-d13db5654d03", // fishing gear
+        "ec6d3402-eed6-44be-a572-9ec0678af403", // campsite cuisine
+        "4fcd08ad-4dac-4236-9030-f59e473b3ec7", // chocobo camp
+        "c8c69ad3-e999-4beb-85f5-527a00f482da", // noctis, heir apparent
+        "2bca2cd2-4d4a-44e4-87c3-732692b77921", // flash photography
+        "7263ef64-dc8d-4a58-91b9-ff4f718e53ae", // warrior's resolve
+        "6db60c73-5943-49da-9a8a-f4a382a1c0f0", // edea, possessed sorceress
+        "bd84f688-a2bb-4f1e-ae24-1a5cf8a05445", // fated clash
+        "76a9b08e-53f7-48d7-a024-3e2bf2318391", // rinoa, angel wing
+        "682b9f3c-960b-4600-b650-eefd588071d3", // squall, gunblade duelist
+        "230e997e-3736-4afd-8571-1cc1b1d6ed96", // duelist's flame
+        "8a24c7c8-18c6-4e0d-b49b-05c19deaf31e", // seifer, balamb rival
+        "cbba90d0-c45e-4ef1-ba0e-a2160533e27f", // the destined black mage
+        "8b52f14c-e6b9-4ad0-8515-6644b201e2ea", // the destined white mage
+        "b81c3f08-9319-4265-a75b-5b12b09aba89", // garland, royal kidnapper
+        "743ee254-07f1-4d13-9ec7-6cb6358b9303", // the destined warrior
+        "417d0d15-4c90-45dc-86f8-4c17fc2dd3f4", // chaos shrine's balck crystal
+        "de95250d-294d-4a0e-8049-e0a877078e2e", // the destined thief
+      ]
+    }
+  ],
+
+  "tdm": [
+    {
+      finish: null,
+      pack_types: ["collector_booster"],
+      cards: [
+        "ec33ea23-c8e8-4066-91b9-5e0ad191bcdb", // mox jasper serialized
+        // ghostfire halo foil and traditional foil
+        "2e7cb37b-3ab5-42d0-860a-0c0760924850", // ugin, eye of the storms
+        "43085bc6-4d16-4a78-af31-b10cea602fc8",
+        "89b98fd0-e2e5-4533-af2b-5230af2c88bd", // elspeth, storm slayer
+        "f421da3b-b88d-4e9f-865b-61120bff917a",
+        "c13f37b1-48ff-45b5-8625-d089073ca90b", // craterhoof behemoth
+        "0e172790-7ab4-4dea-9439-e3cedd3e5cab",
+        "38b6d099-e31f-45b5-b78a-72a4b38d60f0", // dracogenesis
+        "737d2ab6-bb45-432c-9ce2-e9ecb513ee4d",
+        "d5eada03-eaca-4091-8fa0-f8e996a402ad", // clarion conqueror
+        "5aa73d25-c887-487a-ba77-0d4ca992f106",
+        "37821af8-a873-497a-82cc-51095f1eed37", // all-out assault
+        "42c0f348-2435-4c62-9bf7-c1efded1fca0",
+        "9f104106-2922-404e-a959-5d6d071aad74", // narset, jeskai waymaster
+        "40a1c532-e0f6-456a-a6d9-5f7bf1a6b47c",
+        "a267ced0-34af-483c-ba42-517f3f7e22dc", // sarkhan, dragon ascendant
+        "e3be50dc-3735-47a6-9af3-e8d8e425b5b2",
+        "4b1251fb-1f39-4afb-b902-140032f20192", // death begets life
+        "08cb3168-6872-43b6-9980-35ddc20cf192",
+        "5346269a-aa11-4a93-9fbc-109421afe579", // skirmish rhino
+        "0eaca731-0886-4617-b012-451a5ba768db",
+        // dragoneye lands
+        "a4db1b7a-93f2-40a5-b649-80a099ddeb62", // mountain
+        "7e33e540-2828-46ad-a441-366552843d9c", // forest
+        "b300be80-6618-4284-b5c3-95c1ab373e6f", // island
+        "57da24a0-89a7-4756-b4ca-4dea132e8f67", // swamp
+        "3e8c67e5-587a-43b2-af47-bbad1f8b52e9", // plains
+      ]
+    }
+  ],
+
+  "dft": [
+    // collector booster only
+    {
+      finish: null,
+      pack_types: ["collector_booster"],
+      cards: [
+        "934cc1ca-2ce8-4062-b1b7-1976e76da8b6", // serialized the aetherspark
+        // japanese showcase
+        "656ba742-b00f-4fce-8418-987226c25a81", // radiant lotus
+        "8eb85966-66a2-4fb7-b89d-05db7f4e2cb8",
+        "89fba04a-20ab-40eb-9edf-89fdd03bfb7e", // loot, the pathfinder
+        "4f5b04ab-4c61-47f5-88e4-c5c2f93edc11",
+        "d6a40fa6-4378-413b-bed8-7eb0d61b70ad", // chandra, spark hunter
+        "a1864b99-6893-4e4d-94de-641837c05da3",
+        "3c15a04e-b0a7-4560-a838-94213dbb2336", // cursecloth wrappings
+        "c5280941-bcda-4ac7-97d1-db02c7a18ef9",
+        "8327b4b6-058e-448b-99ca-7d2de52d3b4c", // mu yanling, wind rider
+        "7fe19f52-ae23-4a23-800d-f3cf186279f2",
+        "1b9fbbfc-8920-46cd-95cd-2372feb4617a", // march of the world ooze
+        "455027f1-26a4-464b-a456-271a6ec88669",
+        "6b243165-79ad-4193-af89-2ad5e34fc415", // mimeoplasm, revered one
+        "d5a8caa7-714e-4987-8d44-04fbe5a77c6d",
+        "22fd4f1b-afbd-41a5-a76a-f9788e0cec9d", // sepctacular pileup
+        "ec93ed6d-a840-477d-a16c-ffd15a52c941",
+        "0e73d4ed-def7-4456-a750-74fb2bf10f9f", // salvation engine
+        "d56cb1b9-38b7-42ad-b176-dc265bc8abe0",
+        "b3dd66b9-f292-4b10-b753-2df112f6f714", // explosive getaway
+        "14a81f86-e80f-47f7-81cd-0c4b9330e646",
+        // extended art
+        "aafe531a-f1f9-46d4-aff4-2b0df789be66",
+        "5d2abab5-c4f0-41ec-ae6f-e42721ca2cfd",
+        "c0a57479-6409-49e1-8896-2bd3e88d554d",
+        "a258dcf4-b481-4ad5-96ef-2a42de8c9c2a",
+        "e7967282-ae00-4fdd-85c6-bcc8bc9b790b",
+        "23eda600-af1e-4444-a822-830037133c0d",
+        "2528d058-5ca3-4671-8bf1-c8161872cd36",
+        "615e3ebb-c41a-497a-b71b-6549366e5b07",
+        "93211140-5aa7-4700-804d-aa46a8b141d7",
+        "115088f3-9fca-4120-8ca5-c124c3d32975",
+        "c66cbdac-1d15-40f5-b76f-6f21b917abbc",
+        "55b87e12-bd95-450e-a528-a44c76dbfae5",
+        "c4797dcb-507f-4219-95ff-994e2c0d251b",
+        "d1edff87-8563-4cb5-ab9b-7696e920346a",
+        "5d6498f0-5ebd-441a-a851-461b0460e7d5",
+        "8ef84601-6ace-4847-abeb-16dcfdba5c89",
+        "3a198715-4f82-409d-add0-e0200a88d708",
+        "231c4f52-5a12-407f-9917-d2ca91ba4706",
+        "131df43b-2a72-4ca3-8aae-c0dca2eca8fc",
+        "b513dfeb-d7c8-4e4d-b419-f67b45608b4b",
+        "ce40ff0e-04ae-4786-ac0c-54a66ffb48a6",
+      ]
+    },
+    // first place foil, box topper only
+    {
+      finish: null,
+      pack_types: ["box_topper"],
+      cards: [
+        "71074080-d83d-4b4a-b385-f918186530b4",
+        "3985ee93-3aeb-4f0d-a6af-686efbcadda4",
+        "54fc56fc-8c82-4d74-8119-5d260c691b36",
+        "8d815a94-cdf0-4a19-ad06-4292efbb7105",
+        "932d4e0c-2653-4353-8e70-b7cf0f6808ed",
+        "712aab40-5452-4d62-8ad3-fec96d03db98",
+        "77534750-fa92-42b4-8f32-be437eca64ad",
+        "3489de46-e90c-483e-ac2b-547497f64e82",
+        "3b1bff20-0b7a-49f9-b967-773f3043be13",
+        "d62d070e-52b7-4d7f-bd98-13622d859a7b",
+        "c0e29a88-34b6-4c3d-9956-b7eb8d5ef591",
+        "0b787e28-a6bf-489c-affb-4043845c9769",
+        "146670b1-0b6d-4d9b-b931-137c508309a9",
+        "4d4e8762-0aed-4009-86f0-7935a1d12b52",
+        "60c9b613-1494-4df0-9a38-cc0a69fd3945",
+        "b2151639-5621-4ffa-9374-3a1c48a635d9",
+        "db48629b-dc1b-4609-aea2-e4833f66d894",
+        "61bc2ca6-427f-4f07-88b0-cf57a1fe74ab",
+        "625b175a-b63f-46d1-a7e1-95dfc7c03e3f",
+        "07cf7eba-b917-4f14-8bf4-420bb919b7e5",
+        "4363ec0d-a473-4afc-9ae5-4feed762a630",
+        "eee38fa7-d5c8-4f76-92f8-4c5cb5bae5e7",
+        "de65f4cd-3ba4-4e1a-8810-e43cf26b38a4",
+        "fa56ae43-4a6b-4af6-9707-679068bd0934",
+        "2b283c18-abe7-4b73-8532-dd76a85fabd6",
+        "0a17ef59-177c-4c39-8cbb-efa8ab7ac24a",
+        "92766c53-703d-41a2-ad13-8c366dcf25ec",
+        "4efa1ade-00f9-4736-8397-11d4faf65b7b",
+        "ad0eb3de-796d-4da3-aab3-08c2b5b6943d",
+        "a9747c8c-024f-417f-86ad-ee7c6f756aa2",
+        "3e7926c8-1a46-4edb-950b-2c8bac91b476",
+        "3d8ad303-505d-4e2a-9380-80ab9f91a0a3",
+        "7758b89f-9629-45f9-ad37-6435dba37997",
+        "9419e00b-062b-4bb2-9203-f2f86b502371",
+        "a556367e-7db7-47ad-9f10-37d277d80e77",
+        "3655e0a5-af3e-4720-b4cf-c93ae9c10cac",
+        "e3bb615c-e142-4a6e-8d7a-f0a7a3b30568",
+        "47c8f0f0-f2d0-44fa-8163-41a8e35952fd",
+        "fd1b6c5c-4585-47c1-82eb-a324189f3ebd",
+        "2a7aba60-d300-4c33-9e1e-846d6167dc50",
+        "76bf1b29-5a8a-4ac1-aa17-58fcbda969a2",
+        "e7e8e6d0-d155-49da-ac5b-47fb408202e6",
+        "48b75e83-2ed5-48c9-881a-da3d77bdef99",
+        "5a80bb9d-da0d-4f98-8946-43513db4aef6",
+        "a02b39bc-8eda-4c5a-8705-5416cdb24f0d",
+        "21ed5dd3-e67b-4425-bb98-6b07db1e9d1f",
+        "9a6b0d3e-0d3e-44a7-99e3-4ccba6c832e1",
+        "72eb0c5b-ef3f-42db-9f40-0463cacd548d",
+        "05bbbcb2-822f-4729-872b-20638e7ad155",
+        "c5e0ead2-933a-41ad-b1c3-0aa79cc41e93",
+        "a28b514a-29a1-4d85-8eaa-279f3d7e09c1",
+        "bf709cb6-8953-40ce-9fcc-396b6c0ab37a",
+        "9b33841e-7006-41d4-98b0-313ab151c9ec",
+        "d13bb767-1123-48d2-960f-b90b6db3f6ed",
+        "9a86678f-e4b4-4c40-9a99-83029fd97730",
+        "1688041b-a654-493e-bfac-247fdca68b22",
+        "46164400-0557-4c99-83d5-194dc814b46a",
+        "8c14d4cc-79c3-4934-b7a8-25e1973ffea3",
+        "91496c82-44bc-4bb7-9e2a-5f4a3a199f4c",
+        "542fe4ca-d3d8-469c-b5cb-4d0824ba514b",
+        "8bb97f9f-e7be-4794-a3a0-a0d73445c8fe",
+        "83725fcd-d5ec-4b99-b3f6-e7f5325c766e",
+        "f89e403b-9653-493f-a3ac-e01aa6f006e2",
+        "20419718-d922-4f3c-aeb2-30ffb2ff7cbb",
+        "ec057f26-8d14-463b-84ce-cce82b95b08e",
+        "2976e7e4-c53f-47d5-9890-cd30acad4f68",
+        "09e15402-8cc6-4ad2-8088-4df92fa20d8e",
+        "f1191c3a-a6eb-4765-bb79-2f0d920899f9",
+        "c75f3b27-7c08-4e92-ae9a-6208aa9aec0c",
+        "c7533cbb-ab73-4a0c-9ea0-baa97c4665b8",
+        "5e4952a8-4e1f-4a74-8a06-c9d633b25dcd",
+        "b6457d47-8e68-42db-85c9-e0f981c53aa4",
+        "40d45912-7b8d-416e-893b-1d103492a5a1",
+        "a749306b-26ce-4c71-8586-a1ef9788c286",
+        "41dd7467-4e77-4fad-b8e9-b258fa6254f3",
+        "6d6eae8b-73de-4d79-bbe5-2921db1987b2",
+        "87181867-f63d-4642-875f-001c1ed7912f",
+        "4e196d67-1923-459d-98cf-646337914d3b",
+        "5dd76e71-df9b-4fd2-b534-d3f724a56a91",
+        "858dc258-965a-4d1a-aab5-447e0fecbf81",
+        "96f0c1eb-603e-4e3e-b40b-65662c22d72d",
+        "794b7a29-eb42-4c52-a4d9-3976611efdd7",
+        "ec50050d-1da8-4f37-a975-f81d5684a619",
+        "8684d080-070c-4419-9cc8-777500573f55",
+        "333039ef-b328-4082-85ae-162caed5612e",
+        "63ea12cb-c927-44f4-b304-f24919b1104e",
+        "d72328b4-19d1-4855-aa0d-331321eb9945",
+        "5277eeef-50af-4654-9216-caf0c37c27d7",
+        "81d5d0a0-b0ae-4a5c-ace6-77d87fcc8563",
+        "6127cd9e-5785-4ba5-89d0-5eeb0d8aaa0e",
+        "06d22866-07ac-4aef-b43e-29a37f3db1c0",
+        "c21462ee-76d7-4910-9a0c-b470f96b8b51",
+        "36581aa3-8970-40cc-bd1c-e78787ebe441",
+        "fb5f9907-e187-4c01-964c-24b3d27948b5",
+        "7f338af2-f173-45a0-bbea-02517d41bef2",
+        "f2c7805b-c952-4847-b321-e0567923c80e",
+        "c1bd0f7d-1686-42ae-9bea-66b96309f322",
+        "321d595f-7efe-4004-9bbc-390b5a6eb734",
+        "3a062cbd-b769-49d3-a9fd-7aeb414f44d6",
+        "d18d5057-39f7-42aa-9dd5-ecc52f861366",
+        "9d21406e-0c00-4501-a93e-ccd8172314e8",
+        "cff03662-3879-4ca8-b73c-34918194203b",
+        "ba042d60-b1e8-44ad-9103-f40588a0b29c",
+        "f4d198b3-2ff5-484a-905f-c272de7c139d",
+        "c0ea3cfc-64f1-4289-ac6c-82d55bab65de",
+        "a901a616-b8bb-4e10-9886-ee9c6fdc6435",
+        "f85dac5a-c6fa-4a86-9fe3-7a17db06f07c",
+        "da8a7c1f-9d05-4a4c-bdf2-cd9ee7ed18a5",
+        "36bd51bd-e451-4f1d-af19-bb777ec1a85c",
+        "a98ff182-4a84-4d69-83ce-57a7e5b18ebb",
+        "66f1f362-fa4a-49e6-baa5-6797a9408cad",
+        "f63dc8cd-34a7-43ea-a422-3ced3c11f5be",
+        "ac4ff9fc-5c34-4a07-a1f3-35c21a3323b0",
+        "62a95aeb-b1b0-42cd-ad67-fd13717d3c6c",
+        "1f73b484-1503-4899-8b6a-076e8b087810",
+        "58d4d35a-1f7e-4c5e-a999-09ad42f8b4e2",
+        "7642f9db-3eee-471d-ada6-60e990ec3fab",
+        "559dd83b-f24a-43e7-9195-9fcbe6c0c64b",
+        "b3666b4e-d6a4-41be-a529-4a577e75c86d",
+        "ba0c9044-13ae-465e-a9d1-7dc63827540d",
+        "cb17c37c-907d-4416-b8c1-d6a6f4e312f3",
+        "ec7ee49c-1e5d-4b3a-8e0a-59a0d258e804",
+        "10c14636-3ff0-4fbf-9df1-1b6d3d52e29e",
+        "ecf3bcd2-fdc6-4490-858d-3334437a3148",
+        "8e928cc4-be33-4c99-b0d0-c808c225e3ab",
+        "5f93e48d-4681-4354-aa85-493a48287233",
+        "f10ee92a-85cc-48cb-b0b5-8e5185781fb2"
+      ]
+    },
+    // extended art lands only in finish line bundle
+    {
+      finish: null,
+      pack_types: ["bundle"],
+      cards: [
+        "21e9b236-f0e5-4e9d-a9c9-7d625e8412f2", // avishkar raceway
+        "fb37d984-5a9c-45e3-8213-4af93872d512", // amonkhet raceway
+        "9db48a2f-5110-431e-8d72-b70bd2e9d887", // muraganda raceway
+      ]
+    }
   ]
 };
 

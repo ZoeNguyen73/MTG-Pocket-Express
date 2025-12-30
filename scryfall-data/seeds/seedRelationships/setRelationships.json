@@ -1,8 +1,8 @@
 [
   {
-    "parent_set_code": "FIN",
-    "child_set_code": "FIC",
-    "relationship_type": "commander",
+    "parent_set_code": "DFT",
+    "child_set_code": "SPG",
+    "relationship_type": "special_guest",
     "is_active": true,
     "rules": {
       "released_at_match_parent": true,
@@ -11,8 +11,8 @@
     }
   },
   {
-    "parent_set_code": "TDM",
-    "child_set_code": "TDC",
+    "parent_set_code": "DFT",
+    "child_set_code": "DRC",
     "relationship_type": "commander",
     "is_active": true,
     "rules": {

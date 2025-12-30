@@ -124,6 +124,10 @@ const cardSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  frame_effects: {
+    type: [String],
+    default: [],
+  },
   prices: {
     type: cardPricesSchema,
     required: true,
@@ -142,7 +146,7 @@ const cardSchema = new mongoose.Schema({
     // this is optional
     pack_types: {
       type: [String],
-      enum: ["play_booster", "collector_booster"],
+      enum: ["play_booster", "collector_booster", "chocobo_holiday_bundle", "box_topper", "bundle"],
       default: undefined, // treat as no special eligibility logic
     },
 

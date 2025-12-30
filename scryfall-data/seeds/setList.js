@@ -3,11 +3,15 @@
 // ];
 
 const SET_LIST = [
-  { code: "fdn", hasSpg: true, collectorOnly: false }, // Foundations
+  // { code: "fdn", hasSpg: true, collectorOnly: false }, // Foundations
   // { code: "dsk", hasSpg: true, collectorOnly: false }, // Duskmourn
   // { code: "dsc", hasSpg: false, collectorOnly: true, }, // Duskmourn commander expansion
   // { code: "blb", hasSpg: true, collectorOnly: false }, // Bloomburrow
   // { code: "blc", hasSpg: false, collectorOnly: true }, // Bloomburrow commander expansion
+  // { code: "tdm", hasSpg: true, collectorOnly: false }, // Takir Dragonstorm
+  // { code: "tdc", hasSpg: false, collectorOnly: true }, // Takir Dragonstorm commander expansion
+  { code: "dft", hasSpg: true, collectorOnly: false }, // Takir Dragonstorm
+  { code: "drc", hasSpg: false, collectorOnly: true }, // Takir Dragonstorm commander expansion
   // { code: "eoe", hasSpg: true, collectorOnly: false }, // Edge of Eternities
   // { code: "eos", hasSpg: false, collectorOnly: false }, // EOE stellar sights
   // { code: "eoc", hasSpg: false, collectorOnly: true }, // Edge of Eternities commander

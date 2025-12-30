@@ -90,7 +90,7 @@ const seedData = async (cardData, setCode, collectorOnly = false) => {
     throw new Error("Card data is empty or invalid.");
   }
 
-  console.log("carData received in seedData: " + cardData.length + " cards");
+  console.log("cardData received in seedData: " + cardData.length + " cards");
 
   let setId = null;
   try {
@@ -159,6 +159,7 @@ const seedData = async (cardData, setCode, collectorOnly = false) => {
       booster: card.booster,
       rarity: card.rarity,
       frame: card.frame,
+      frame_efects: card.frame_effects && Array.isArray(card.frame_effects) ? [...card.frame_effects] : [],
       promo_types: card.promo_types && Array.isArray(card.promo_types) ? [...card.promo_types] : [],
       pack_eligibility: {},
       set_id: setId,
@@ -195,9 +196,9 @@ const seedData = async (cardData, setCode, collectorOnly = false) => {
 
   try {
     await CardModel.insertMany(formattedCards);
-    console.log(`All cards from set ${setCode} have been seeded successfully.`);
+    console.log(`==> ✅ All ${formattedCards.length} cards from set ${setCode} have been seeded successfully.`);
   } catch (error) {
-    console.error(`Error during bulk insert for set ${setCode}: ${error.message}.`);
+    console.error(`==> ❌ Error during bulk insert for set ${setCode}: ${error.message}.`);
   }
 };
 
