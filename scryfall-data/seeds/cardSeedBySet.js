@@ -85,7 +85,7 @@ const getSetId = async (setCode) => {
   }
 };
 
-const seedData = async (cardData, setCode, collectorOnly = false) => {
+const seedData = async (cardData, setCode, collectorOnly = false, isSpgSet = false) => {
   if (!Array.isArray(cardData) || cardData.length === 0) {
     throw new Error("Card data is empty or invalid.");
   }
@@ -165,7 +165,7 @@ const seedData = async (cardData, setCode, collectorOnly = false) => {
       set_id: setId,
     };
 
-    if (setCode === "spg") {
+    if (isSpgSet) {
       formattedCard.pack_eligibility = spg_pack_eligibility;
 
     } else {
@@ -209,14 +209,15 @@ const seed = async () => {
 
   for await (const set of SET_LIST) {
     try {
-      const { code, hasSpg, collectorOnly } = set;
+      const { code, hasSpg, spgCode, collectorOnly } = set;
       console.log("set to be seeded: " + JSON.stringify(set));
       const mainSetData = await getCardDataBySet(code);
       await seedData(mainSetData, code, collectorOnly);
       if (hasSpg) {
+        const code = spgCode ? spgCode : "spg";
         const releaseDateStr = mainSetData[0].released_at;
-        const spgSetData = await getCardDataBySet("spg", releaseDateStr);
-        await seedData(spgSetData, "spg");
+        const spgSetData = await getCardDataBySet(code, releaseDateStr);
+        await seedData(spgSetData, code, false, true);
       }
       
     } catch (error) {

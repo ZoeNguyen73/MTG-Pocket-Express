@@ -2,7 +2,7 @@ const path = require("path");
 const fs = require("fs");
 const { Readable } = require("stream");
 
-const CHILD_SET_CARDS_DATA_FILENAME = "dftExtendedArt";
+const CHILD_SET_CARDS_DATA_FILENAME = "tleNonSourceMaterial";
 const INPUT_PATH = path.join(__dirname, `./${CHILD_SET_CARDS_DATA_FILENAME}.json`);
 
 const simplifyChildSetCardsData = () => {

@@ -146,7 +146,7 @@ const cardSchema = new mongoose.Schema({
     // this is optional
     pack_types: {
       type: [String],
-      enum: ["play_booster", "collector_booster", "chocobo_holiday_bundle", "box_topper", "bundle"],
+      enum: ["play_booster", "collector_booster", "chocobo_holiday_bundle", "box_topper", "bundle", "bab"],
       default: undefined, // treat as no special eligibility logic
     },
 

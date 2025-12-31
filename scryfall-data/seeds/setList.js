@@ -10,14 +10,18 @@ const SET_LIST = [
   // { code: "blc", hasSpg: false, collectorOnly: true }, // Bloomburrow commander expansion
   // { code: "tdm", hasSpg: true, collectorOnly: false }, // Takir Dragonstorm
   // { code: "tdc", hasSpg: false, collectorOnly: true }, // Takir Dragonstorm commander expansion
-  { code: "dft", hasSpg: true, collectorOnly: false }, // Takir Dragonstorm
-  { code: "drc", hasSpg: false, collectorOnly: true }, // Takir Dragonstorm commander expansion
+  // { code: "dft", hasSpg: true, collectorOnly: false }, // Aetherdrift
+  // { code: "drc", hasSpg: false, collectorOnly: true }, // Aetherdrift commander expansion
   // { code: "eoe", hasSpg: true, collectorOnly: false }, // Edge of Eternities
   // { code: "eos", hasSpg: false, collectorOnly: false }, // EOE stellar sights
   // { code: "eoc", hasSpg: false, collectorOnly: true }, // Edge of Eternities commander
   // { code: "fin", hasSpg: false, collectorOnly: false }, // Final Fantasy
   // { code: "fca", hasSpg: false, collectorOnly: false }, // Final Fantasy expansion
   // { code: "fic", hasSpg: false, collectorOnly: true }, // Final Fantasy commander
+  // { code: "spm", hasSpg: true, spgCode: "mar", collectorOnly: false }, // SPM
+  // { code: "spe", hasSpg: false, spgCode: null, collectorOnly: false }, // SPM expansion
+  { code: "tla", hasSpg: false, spgCode: null, collectorOnly: false }, // Avatar The Last Airbender
+  { code: "tle", hasSpg: false, spgCode: null, collectorOnly: false }, // Avatar The Last Airbender
   // "mh3", // Modern Horizons 3
   // "rvr", // Ravnica Remastered
   // "lci", // The Lost Caverns of Ixalan
