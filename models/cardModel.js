@@ -1,5 +1,8 @@
 const mongoose = require("mongoose");
 
+const { PACK_TYPES } = require("../utils/boosterTypes");
+const { FINISHES, RARITY } = require("../utils/cardAttributes");
+
 const cardFaceSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -86,6 +89,7 @@ const cardSchema = new mongoose.Schema({
   },
   finishes: {
     type: [String],
+    enum: FINISHES,
     required: true,
   },
   oversized: {
@@ -118,6 +122,7 @@ const cardSchema = new mongoose.Schema({
   },
   rarity: {
     type: String,
+    enum: RARITY,
     required: true,
   },
   frame: {
@@ -146,13 +151,13 @@ const cardSchema = new mongoose.Schema({
     // this is optional
     pack_types: {
       type: [String],
-      enum: ["play_booster", "collector_booster", "chocobo_holiday_bundle", "box_topper", "bundle", "bab"],
+      enum: PACK_TYPES,
       default: undefined, // treat as no special eligibility logic
     },
 
     finishes_by_pack_types: {
-      play_booster: { type: [String], enum: ["nonfoil", "foil", "etched"], default: undefined },
-      collector_booster: { type: [String], enum: ["nonfoil", "foil", "etched"], default: undefined },
+      play_booster: { type: [String], enum: FINISHES, default: undefined },
+      collector_booster: { type: [String], enum: FINISHES, default: undefined },
     },
 
     override_reason: { type: String, default: "" },

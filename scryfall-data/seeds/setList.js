@@ -22,16 +22,6 @@ const SET_LIST = [
   // { code: "spe", hasSpg: false, spgCode: null, collectorOnly: false }, // SPM expansion
   { code: "tla", hasSpg: false, spgCode: null, collectorOnly: false }, // Avatar The Last Airbender
   { code: "tle", hasSpg: false, spgCode: null, collectorOnly: false }, // Avatar The Last Airbender
-  // "mh3", // Modern Horizons 3
-  // "rvr", // Ravnica Remastered
-  // "lci", // The Lost Caverns of Ixalan
-  // "wot", // Wilds of Eldraine: Enchanting Tales
-  // "ltr", // The Lord of the Rings: Tales of Middle-earth
-  // "one", // Phyrexia: All Will Be One
-  // "clb", // Commander Legends: Battle for Baldur's Gate
-  // "mb2", // Mystery Booster 2
-  // "eoe", // edge of eternities
-  // "eos", // edge of eternities expansion
 ];
 
 module.exports = SET_LIST;
