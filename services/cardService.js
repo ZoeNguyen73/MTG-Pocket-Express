@@ -1,34 +1,22 @@
 const CardModel = require("../models/cardModel");
 const SetModel = require("../models/setModel");
 
-const getRandomInt = require("../utils/randomUtils")
-const { FINISHES_DROP_RATE } = require("../utils/cardAttributes");
+const { getRandomInt, getRandomOptionWeighted } = require("../utils/randomUtils");
 
 const errorHandler = require("../middlewares/errorHandler");
 
-const getRandomFinish = (availableFinishes) => {
-  if (availableFinishes.length === 1) {
-    return availableFinishes[0];
+const getRandomRarity = (rarity) => {
+  if (!rarity || (!rarity.fixed && !rarity.weighted )) return "any";
+  if (rarity.fixed) return rarity.fixed;
+  if (rarity.weighted?.weights) return getRandomOptionWeighted(rarity.weighted.weights);
+  throw new Error("Missing valid rarity information in source");
+};
 
-  } else {
-    const filteredRates = FINISHES_DROP_RATE.filter((rate) => 
-      availableFinishes.includes(rate.finish)
-    );
-
-    const chance = Math.random();
-    let culmulativeRate = 0;
-
-    for (const { finish, rate } of filteredRates) {
-      culmulativeRate += rate;
-      if (chance <= culmulativeRate) {
-        return finish;
-      }
-    }
-
-    // Default to the last available finish (fallback)
-    return filteredRates[filteredRates.length - 1].finish;
-
-  }
+const getRandomFinish = (finish) => {
+  if (!finish || (!finish.fixed && !finish.weighted)) return "any";
+  if (finish.fixed) return finish.fixed;
+  if (finish.weighted?.weights) return getRandomOptionWeighted(finish.weighted.weights);
+  throw new Error("Missing valid finish information in source");
 };
 
 /**
@@ -42,88 +30,244 @@ const getRandomFinish = (availableFinishes) => {
  * @returns {Object} A random card that matches the query criteria.
 */
 
-const getRandomCards = async ({ setCode, rarity, type = {}, quantity, note }) => {
-  // validate the required parammeters
-  if (!setCode || !rarity || !rarity.length) {
-    throw new Error("setCode and rarity are required parameters.");
+const getRandomCards = async ({ 
+  releasedAt, 
+  setCode, 
+  setId, 
+  pool, 
+  quantity, 
+  allowDup = false, 
+  note = "",
+  slotCode, 
+  packType }) => {
+  
+  const { source_type, child_set_code, gating, rarity, finish, filters } = pool;
+  // console.log("filters: " + JSON.stringify(filters));
+  if (!setCode || !setId || !source_type || !quantity) throw new Error("Missing required parameters to getRandomCard");
+  if (source_type === "child_set" && !child_set_code) throw new Error("Missing child_set_code");
+
+  // if quantity > 1 and mixed rarity/finish, need to generate card 1 by 1
+  // so that rarity / finish can be rerolled each time
+  let batchGenerate = true;
+  if (quantity > 1 && (rarity?.weighted?.weights || finish?.weighted?.weights)) {
+    batchGenerate = false;
   }
 
-  let setID = null;
-  // get setID
-  try {
-    const set = await SetModel.findOne({ code: setCode });
-    if (!set) {
-      const error = new Error();
-      error.statusCode = 404;
-      error.details = "Unable to find matching Set in database";
-      throw error;
+  let finalSetId = setId;
+  if (source_type === "child_set") {
+    const set = await SetModel.findOne({ code: child_set_code }).lean();
+    if (!set) throw new Error(`Child set not found: ${child_set_code}`);
+    finalSetId = set._id;
+  }
+
+  // build the MongoDB query to get the biggest pool of cards
+  const query = { set_id: finalSetId };
+  query.$or = (query.$or || []).concat([
+    { "pack_eligibility.pack_types": { $exists: false } },
+    { "pack_eligibility.pack_types": packType }, // array contains the packType passed in
+  ]);
+
+  const applyArrayFilters = (query, field, filter) => {
+    if (!filter) return;
+
+    query[field] = query[field] || {};
+    
+    if (filter.include_any?.length) query[field].$in = filter.include_any;
+    if (filter.include_all?.length) query[field].$all = filter.include_all;
+    if (filter.exclude_any?.length) query[field].$nin = filter.exclude_any;
+
+    if (Object.keys(query[field]).length === 0) delete query[field];
+  };
+  
+  if (filters) {
+    const formattedFilters = filters.toObject();
+    for (const [key, value] of Object.entries(formattedFilters)) {
+      // handle filters logic regarding type_line
+      if (key === "type_line") {
+
+        const include = value.include?.length ? value.include.map(t => `(${t})`).join("|") : null;
+        const exclude = value.exclude?.length ? value.exclude.map(t => `(${t})`).join("|") : null;
+
+        const and = query.$and || [];
+
+        if (include) {
+          and.push({ "card_faces.type_line": { $regex: include, $options: "i" } });
+        }
+        if (exclude) {
+          and.push({ "card_faces.type_line": { $not: { $regex: exclude, $options: "i" } } });
+        }
+
+        if (and.length) query.$and = and;
+
+      // handle filters logic regarding promo types & frame_effects
+      } else if (key === "promo_types") {
+        applyArrayFilters(query, "promo_types", value);
+
+      } else if (key === "frame_effects") {
+        applyArrayFilters(query, "frame_effects", value);
+
+      } else if (key === "full_art") {
+        if (typeof value === "boolean") {
+          query.full_art = value;
+        }
+      }
     }
-    setID = set._id;
-  } catch (error) {
-    console.log("error:" + error.message);
   }
 
-  // build the MongoDB query
-  const query = {
-    set_id: setID,
-    rarity: { $in: rarity }
+  if (gating) {
+    if (gating.released_at_match_parent) {
+      let parentReleasedAt = releasedAt;
+      if (!parentReleasedAt) {
+        try {
+          const parentSet = await SetModel.findOne({ code: setCode }).lean();
+          if (!parentSet) {
+            const error = new Error();
+            error.statusCode = 404;
+            error.details = "Unable to find matching Set in database";
+            throw error;
+          }
+          parentReleasedAt = parentSet.released_at;
+        } catch (error) {
+          console.log("error:" + error.message);
+        }
+      }
+      query["released_at"] = parentReleasedAt;
+    }
+      
+
+    if (gating.allowed_scryfall_ids?.length) {
+      query.scryfall_id = query.scryfall_id || {};
+      query.scryfall_id.$in = gating.allowed_scryfall_ids;
+    }
+
+    if (gating.excluded_scryfall_ids?.length) {
+      query.scryfall_id = query.scryfall_id || {};
+      query.scryfall_id.$nin = gating.excluded_scryfall_ids;
+    }
+  }
+
+  const hasValidFinish = (card, packType, finish) => {
+    if (!finish || finish === "any") return true;
+
+    // must be a finish the card actually has
+    if (!card?.finishes?.includes(finish)) return false;
+
+    const pe = card?.pack_eligibility;
+
+    // If no override info, allow (default behaviour)
+    if (!pe?.pack_types?.length && !pe?.finishes_by_pack_types) return true;
+
+    // If pack_types exists, it must include this packType
+    if (pe?.pack_types?.length && !pe.pack_types.includes(packType)) return false;
+
+    // If finishes_by_pack_types has an entry for this packType, enforce it
+    const allowedFinishes = pe?.finishes_by_pack_types?.[packType];
+    if (Array.isArray(allowedFinishes) && allowedFinishes.length) {
+      return allowedFinishes.includes(finish);
+    }
+
+    // otherwise, no restriction
+    return true;
+
   };
 
-  // handle type inclusion
-  if (type.include && type.include.length) {
-    query["card_faces.type_line"] = {
-      $regex: type.include.map((t) => `(${t})`).join("|"),
-      $options: "i",
-    };
-  }
+  const shouldRejectCard = ({ card, finalRarity, finalFinish, packType, allowDup, chosenIds }) => {
+    if (!card) return true;
 
-  // Handle type exclusion
-  if (type.exclude && type.exclude.length) {
-    query["card_faces.type_line"] = query["card_faces.type_line"]
-      ? {
-          $regex: query["card_faces.type_line"].$regex, // Keep the inclusion logic
-          $options: query["card_faces.type_line"].$options,
-          $not: {
-            $regex: type.exclude.map((t) => `(${t})`).join("|"),
-            $options: "i",
-          },
-        }
-      : {
-          $not: {
-            $regex: type.exclude.map((t) => `(${t})`).join("|"),
-            $options: "i",
-          },
-        };
-  }
+    if (finalRarity !== "any" && card.rarity !== finalRarity) return true;
 
-  // fetch all matching cards
-  const cards = await CardModel.find(query);
+    if (!hasValidFinish(card, packType, finalFinish)) return true;
+
+    if (!allowDup && chosenIds.includes(card._id)) return true;
+
+    return false;
+  };
+
+  // fetch all matching cards to create a pool
+  // console.log("final query: " + JSON.stringify(query));
+  const cards = await CardModel.find(query).lean();
 
   if (!cards.length) {
     throw new Error("No cards found matching the query criteria.");
   }
 
   const generatedCards = [];
+  const chosenIds = [];
 
-  for (let i = 1; i <= quantity; i++) {
-    const randomIndex = getRandomInt(0, cards.length - 1);
-    const card = cards[randomIndex];
+  if (batchGenerate) {
 
-    const { finishes } = card;
+    // if batchGenerate, then use the same rarity and finish for all cards
+    let finalRarity = "any";
+    if (rarity) finalRarity = getRandomRarity(rarity);
 
-    if (!finishes || !finishes.length) {
-      throw new Error(`Card ${card.name} has no valid finishes.`);
+    let finalFinish = "any";
+    if (finish) finalFinish = getRandomFinish(finish);
+
+    for (let i = 0; i < quantity; i++) {
+      let attempts = 0;
+      const maxAttempts = 300;   
+      let card = null;
+      while (shouldRejectCard({card, finalRarity, finalFinish, packType, allowDup, chosenIds})) {
+        // prevent infinite loop
+        if (++attempts > maxAttempts) {
+          throw new Error(`Failed to generate card for slot. Constraints too tight. Query=${JSON.stringify(query)}`);
+        }
+        const randomIndex = getRandomInt(0, cards.length - 1);
+        card = cards[randomIndex];
+      }
+      
+      let price_code = "usd";
+      const cardFinish = finalFinish !== "any"
+        ? finalFinish
+        : card.finishes[Math.floor(Math.random() * card.finishes.length)];
+
+      if (cardFinish === "foil") {
+        price_code = "usd_foil";
+      } else if (cardFinish === "etched") {
+        price_code = "usd_etched";
+      }
+
+      chosenIds.push(card._id);
+      generatedCards.push({ ...card, finish: cardFinish, note: note ? note : slotCode, final_price: card.prices[price_code] });
+
     }
 
-    const finish = getRandomFinish(finishes);
-    let price_code = "usd";
-    if (finish === "foil") {
-      price_code = "usd_foil";
-    } else if (finish === "etched") {
-      price_code = "usd_etched";
-    }
-    generatedCards.push({ ...card.toObject(), finish, note, final_price: card.prices[price_code] });
+  } else {
+    for (let i = 0; i < quantity; i++) {
+      // if NOT batchGenerate, then reroll rarity and finish for each card
+      let finalRarity = "any";
+      if (rarity) finalRarity = getRandomRarity(rarity);
 
+      let finalFinish = "any";
+      if (finish) finalFinish = getRandomFinish(finish);
+
+      let card = null;
+      let attempts = 0;
+      const maxAttempts = 300;   
+      while (shouldRejectCard({card, finalRarity, finalFinish, packType, allowDup, chosenIds})) {
+        // prevent infinite loop
+        if (++attempts > maxAttempts) {
+          throw new Error(`Failed to generate card for slot. Constraints too tight. Query=${JSON.stringify(query)}`);
+        }
+        const randomIndex = getRandomInt(0, cards.length - 1);
+        card = cards[randomIndex];
+      }
+
+      let price_code = "usd";
+      const cardFinish = finalFinish !== "any"
+        ? finalFinish
+        : card.finishes[Math.floor(Math.random() * card.finishes.length)];
+
+      if (cardFinish === "foil") {
+        price_code = "usd_foil";
+      } else if (cardFinish === "etched") {
+        price_code = "usd_etched";
+      }
+
+      chosenIds.push(card._id);
+      generatedCards.push({ ...card, finish: cardFinish, note: note ? note : slotCode, final_price: card.prices[price_code] });
+
+    }
   }
 
   return generatedCards;

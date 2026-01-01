@@ -22,11 +22,6 @@ const filtersSchema = new mongoose.Schema({
     exclude: { type: [String], default: undefined },
   },
 
-  rarity: {
-    include: { type: [String], default: undefined },
-    exclude: { type: [String], default: undefined },
-  },
-
   booster_only: { type: Boolean, default: true },
 
   // e.g. require promo_types includes "sourcematerial"
@@ -43,7 +38,7 @@ const filtersSchema = new mongoose.Schema({
   },
 
   full_art: { type: Boolean, default: undefined },
-});
+}, { _id: false });
 
 const slotSourceSchema = new mongoose.Schema({
   source_type: {
@@ -66,13 +61,13 @@ const slotSourceSchema = new mongoose.Schema({
 
   // rarity selection
   rarity: {
-    fixed: { type: [String], enum: RARITY, default: undefined }, // eg: ["common"] or ["rare", "mythic"]
+    fixed: { type: String, enum: RARITY, default: undefined }, // eg: ["common"] or ["rare", "mythic"]
     weighted: { type: weightedMapSchema, default: undefined} // eg: common 6%, uncommon 75%...
   },
 
   // finish selection
   finish: {
-    fixed: { type: [String], enum: FINISHES, default: undefined }, // eg: ["nonfoil"] or ["foil", "nonfoil"]
+    fixed: { type: String, enum: FINISHES, default: undefined }, // eg: ["nonfoil"] or ["foil", "nonfoil"]
     weighted: { type: weightedMapSchema, default: undefined}
   },
 

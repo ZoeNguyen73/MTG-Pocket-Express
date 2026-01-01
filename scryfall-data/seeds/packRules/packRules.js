@@ -14,8 +14,8 @@ const PACK_RULES = {
             {
               source_type: "main",
               weight: 100,
-              rarity: { fixed: ["common"] },
-              finish: { fixed: ["nonfoil"] },
+              rarity: { fixed: "common" },
+              finish: { fixed: "nonfoil" },
               filters: { type_line: { exclude: ["Land"] }, booster_only: true }
             }
           ]
@@ -27,15 +27,15 @@ const PACK_RULES = {
             {
               source_type: "main",
               weight: 25,
-              rarity: { fixed: ["common"] },
-              finish: { fixed: ["nonfoil"] },
+              rarity: { fixed: "common" },
+              finish: { fixed: "nonfoil" },
               filters: { type_line: { exclude: ["Land"] }, booster_only: true }
             },
             {
               source_type: "child_set",
               child_set_code: "tle",
               weight: 1,
-              finish: { fixed: ["nonfoil"] },
+              finish: { fixed: "nonfoil" },
               filters: {
                 type_line: { exclude: ["Land"] },
                 booster_only: true,
@@ -51,8 +51,8 @@ const PACK_RULES = {
             {
               source_type: "main",
               weight: 100,
-              rarity: { fixed: ["uncommon"] },
-              finish: { fixed: ["nonfoil"] },
+              rarity: { fixed: "uncommon" },
+              finish: { fixed: "nonfoil" },
               filters: { booster_only: true }
             }
           ]
@@ -65,7 +65,7 @@ const PACK_RULES = {
               source_type: "main",
               weight: 100,
               rarity: { weighted: { weights: { common: 5, uncommon: 74, rare: 17, mythic: 4 } } },
-              finish: { fixed: ["nonfoil"] },
+              finish: { fixed: "nonfoil" },
               filters: { type_line: { exclude: ["Land"] }, booster_only: true }
             }
           ]
@@ -78,7 +78,7 @@ const PACK_RULES = {
               source_type: "main",
               weight: 100,
               rarity: { weighted: { weights: { rare: 80, mythic: 20 } } },
-              finish: { fixed: ["nonfoil"] },
+              finish: { fixed: "nonfoil" },
               filters: { booster_only: true }
             }
           ]
@@ -91,7 +91,7 @@ const PACK_RULES = {
               source_type: "main",
               weight: 100,
               rarity: { weighted: { weights: { common: 54, uncommon: 37, rare: 7, mythic: 2 } } },
-              finish: { fixed: ["foil"] },
+              finish: { fixed: "foil" },
               filters: { type_line: { exclude: ["Land"] }, booster_only: true }
             }
           ]
@@ -103,7 +103,7 @@ const PACK_RULES = {
             {
               source_type: "main",
               weight: 100,
-              rarity: { fixed: ["common"] },
+              rarity: { fixed: "common" },
               finish: { weighted: {weights: { "nonfoil": 80, "foil": 20 }} },
               filters: { type_line: { include: ["Land"] }, booster_only: true }
             }
@@ -126,8 +126,8 @@ const PACK_RULES = {
             {
               source_type: "main",
               weight: 100,
-              rarity: { fixed: ["common"] },
-              finish: { fixed: ["foil"] },
+              rarity: { fixed: "common" },
+              finish: { fixed: "foil" },
             }
           ]
         },
@@ -138,8 +138,8 @@ const PACK_RULES = {
             {
               source_type: "main",
               weight: 100,
-              rarity: { fixed: ["uncommon"] },
-              finish: { fixed: ["foil"] },
+              rarity: { fixed: "uncommon" },
+              finish: { fixed: "foil" },
             }
           ]
         },
@@ -151,8 +151,8 @@ const PACK_RULES = {
               source_type: "child_set",
               child_set_code: "tle",
               weight: 100,
-              rarity: { fixed: ["common"] },
-              finish: { fixed: ["foil"] },
+              rarity: { fixed: "common" },
+              finish: { fixed: "foil" },
               filters: { 
                 promo_types: { exclude_any: ["sourcematerial"] },
               }
@@ -166,8 +166,7 @@ const PACK_RULES = {
             {
               source_type: "main",
               weight: 8,
-              rarity: { fixed: ["uncommon"] },
-              finish: { fixed: ["foil"] },
+              rarity: { fixed: "uncommon" },
               filters: { 
                 type_line: { exclude: ["Land"] }, 
                 booster_only: true,
@@ -178,8 +177,8 @@ const PACK_RULES = {
               source_type: "child_set",
               child_set_code: "tle",
               weight: 92,
-              rarity: { fixed: ["uncommon"] },
-              finish: { fixed: ["foil"] },
+              rarity: { fixed: "uncommon" },
+              finish: { fixed: "foil" },
               filters: { 
                 promo_types: { exclude_any: ["sourcematerial"] },
               }
@@ -193,8 +192,8 @@ const PACK_RULES = {
             {
               source_type: "main",
               weight: 100,
-              rarity: { fixed: ["common"] },
-              finish: { fixed: ["foil"] },
+              rarity: { fixed: "common" },
+              finish: { fixed: "foil" },
               filters: { 
                 type_line: { include: ["Land"] }, 
                 full_art: true,
@@ -210,7 +209,7 @@ const PACK_RULES = {
               source_type: "main",
               weight: 100,
               rarity: { weighted: { weights: { "rare": 85.7, "mythic": 14.3 }} },
-              finish: { fixed: ["foil"] },
+              finish: { fixed: "foil" },
             }
           ]
         },
@@ -223,7 +222,7 @@ const PACK_RULES = {
               child_set_code: "tle",
               weight: 100,
               rarity: { weighted: { weights: { "rare": 85.7, "mythic": 14.3 }} },
-              finish: { fixed: ["foil"] },
+              finish: { fixed: "foil" },
               filters: { 
                 promo_types: { exclude_any: ["sourcematerial"] },
               }
@@ -238,7 +237,7 @@ const PACK_RULES = {
               source_type: "main",
               weight: 100,
               rarity: { weighted: { weights: { "rare": 85.7, "mythic": 14.3 }} },
-              finish: { fixed: ["nonfoil"] },
+              finish: { fixed: "nonfoil" },
               filters: { 
                 promo_types: { include_any: ["boosterfun"] },
               }
@@ -268,7 +267,7 @@ const PACK_RULES = {
               source_type: "main",
               weight: 100,
               rarity: { weighted: { weights: { "rare": 85.7, "mythic": 14.3 }} },
-              finish: { fixed: ["foil", "etched"] } ,
+              finish: { fixed: "foil" } ,
               filters: { 
                 promo_types: { include_any: ["boosterfun"] },
               }
