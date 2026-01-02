@@ -159,7 +159,7 @@ const seedData = async (cardData, setCode, collectorOnly = false, isSpgSet = fal
       booster: card.booster,
       rarity: card.rarity,
       frame: card.frame,
-      frame_efects: card.frame_effects && Array.isArray(card.frame_effects) ? [...card.frame_effects] : [],
+      frame_effects: card.frame_effects && Array.isArray(card.frame_effects) ? [...card.frame_effects] : [],
       promo_types: card.promo_types && Array.isArray(card.promo_types) ? [...card.promo_types] : [],
       pack_eligibility: {},
       set_id: setId,

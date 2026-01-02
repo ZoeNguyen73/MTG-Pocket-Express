@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const PACK_RULES = require("./packRules/packRules");
 const PackRuleModel = require("../../models/packRuleModel");
 
-const SET_CODE = "tla";
+const SET_CODE = "dsk";
 
 const connectDb = async () => {
   try {
@@ -36,7 +36,7 @@ const seed = async () => {
     } catch (error) {
       console.error(`==> ❌ Error during bulk insert pack rules for set ${SET_CODE}: ${error.message}.`);
       process.exit(1);
-      }
+    }
   }
 
   process.exit(0);

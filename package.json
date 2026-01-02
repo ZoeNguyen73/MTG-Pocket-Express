@@ -13,7 +13,8 @@
     "seed-prices": "node scryfall-data/seeds/pricesSeed.js",
     "seed-relationships": "node scryfall-data/seeds/seedSetRelationships.js",
     "seed-pack-rules": "node scryfall-data/seeds/seedPackRulesBySet.js",
-    "simplify-cards": "node scryfall-data/seeds/seedRelationships/simplifyChildSetCards.js"
+    "simplify-cards": "node scryfall-data/seeds/seedRelationships/simplifyChildSetCards.js",
+    "update-cards": "node scryfall-data/seeds/cardsUpdate/updateScript.js"
   },
   "author": "",
   "license": "ISC",

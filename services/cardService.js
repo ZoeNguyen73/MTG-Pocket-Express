@@ -184,7 +184,7 @@ const getRandomCards = async ({
   };
 
   // fetch all matching cards to create a pool
-  // console.log("final query: " + JSON.stringify(query));
+  // console.log("==> 🔍 final query: " + JSON.stringify(query));
   const cards = await CardModel.find(query).lean();
 
   if (!cards.length) {

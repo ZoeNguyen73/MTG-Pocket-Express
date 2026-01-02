@@ -45,6 +45,7 @@ const controller = {
 
       // looping through slots
       for (const slot of packRule.slots) {
+        // console.log("slot: " + JSON.stringify(slot));
         const {slot_code, quantity, sources, allow_duplicates } = slot;
 
         if (sources.length === 0) continue;
