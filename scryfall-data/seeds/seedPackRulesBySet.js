@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const PACK_RULES = require("./packRules/packRules");
 const PackRuleModel = require("../../models/packRuleModel");
 
-const SET_CODE = "dsk";
+const SET_CODE = "fin";
 
 const connectDb = async () => {
   try {

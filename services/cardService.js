@@ -184,7 +184,7 @@ const getRandomCards = async ({
   };
 
   // fetch all matching cards to create a pool
-  // console.log("==> 🔍 final query: " + JSON.stringify(query));
+  // console.log(`==> slot: ${slotCode} 🔍 final query: ${JSON.stringify(query)}`);
   const cards = await CardModel.find(query).lean();
 
   if (!cards.length) {
@@ -205,12 +205,41 @@ const getRandomCards = async ({
 
     for (let i = 0; i < quantity; i++) {
       let attempts = 0;
-      const maxAttempts = 300;   
+      const maxAttempts = 800;   
       let card = null;
       while (shouldRejectCard({card, finalRarity, finalFinish, packType, allowDup, chosenIds})) {
         // prevent infinite loop
         if (++attempts > maxAttempts) {
-          throw new Error(`Failed to generate card for slot. Constraints too tight. Query=${JSON.stringify(query)}`);
+          const counts = {
+            total: cards.length,
+            rarityOK: 0,
+            finishOK: 0,
+            packTypeOK: 0,
+            eligibilityOK: 0,
+            allOK: 0,
+          };
+
+          for (const c of cards) {
+            const rarityOK = finalRarity === "any" || c.rarity === finalRarity;
+            const finishOK = finalFinish === "any" || c.finishes?.includes(finalFinish);
+
+            const packTypes = c.pack_eligibility?.pack_types;
+            const packTypeOK = !Array.isArray(packTypes) || packTypes.length === 0 || packTypes.includes(packType);
+
+            const allowed = c.pack_eligibility?.finishes_by_pack_types?.[packType];
+            const eligibilityOK =
+              !Array.isArray(allowed) || allowed.length === 0 || allowed.includes(finalFinish);
+
+            if (rarityOK) counts.rarityOK++;
+            if (finishOK) counts.finishOK++;
+            if (packTypeOK) counts.packTypeOK++;
+            if (eligibilityOK) counts.eligibilityOK++;
+            if (rarityOK && finishOK && packTypeOK && eligibilityOK) counts.allOK++;
+          }
+
+          throw new Error(
+            `Failed slot ${slotCode}. pool=${counts.total}, rarityOK=${counts.rarityOK}, finishOK=${counts.finishOK}, packTypeOK=${counts.packTypeOK}, eligibilityOK=${counts.eligibilityOK}, allOK=${counts.allOK}. finalRarity=${finalRarity}, finalFinish=${finalFinish}. Query=${JSON.stringify(query)}`
+          );
         }
         const randomIndex = getRandomInt(0, cards.length - 1);
         card = cards[randomIndex];
@@ -270,6 +299,7 @@ const getRandomCards = async ({
     }
   }
 
+  // console.log(`${generatedCards.length} cards found`);
   return generatedCards;
 
 };

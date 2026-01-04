@@ -5,6 +5,12 @@ const UPDATES = require("./updates");
 
 const CardModel = require("../../../models/cardModel");
 
+const SET_IDS = [
+  // "6948ef35014198a4bcfa80a3", // mar
+  "6948ef35014198a4bcfa809c", // tle
+  // "6948ef35014198a4bcfa811f", // spg
+]
+
 const connectDb = async () => {
   try {
 
@@ -56,6 +62,28 @@ const seed = async () => {
   
   console.log("✅ Done.");
   process.exit(0);
+};
+
+const seed2 = async () => {
+  await connectDb();
+
+  console.log("Seeding card updates...");
+
+  try {
+    const field = "pack_eligibility.finishes_by_pack_types.collector_booster";
+    const result = await CardModel.updateMany(
+      { set_id: { $in: SET_IDS}},
+      { $addToSet: { [field]: "foil"} }
+    )
+
+    console.log(`==> ✅ matched: ${result.matchedCount ?? result.n}, modified: ${result.modifiedCount ?? result.nModified}`);
+  } catch (error) {
+    console.error(`==> ❌ Error during bulk updating cards: ${error.message}.`);
+    process.exit(1);
+  }
+  console.log("✅ Done.");
+  process.exit(0);
+
 };
 
 seed();
