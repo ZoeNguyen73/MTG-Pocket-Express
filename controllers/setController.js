@@ -1,6 +1,7 @@
 const SetModel = require("../models/setModel");
 const CardModel = require("../models/cardModel");
 const TopCardModel = require("../models/topCardModel");
+const PackPriceModel = require("../models/packPriceModel");
 
 const getTopCards = async (setId) => {
   const topCards = await TopCardModel.find({ set_id: setId })
@@ -44,6 +45,13 @@ const controller = {
 
       const cardCount = await CardModel.countDocuments({ set_id: set._id });
       set.card_count = cardCount;
+
+      const packPrices = await PackPriceModel.find({ set_code: set.code }).lean();
+      set.pack_prices = [];
+      for (const pack of packPrices) {
+        const { booster_type, price } = pack;
+        set.pack_prices.push({ booster_type, price });
+      };
 
       if (includeTopCards) {
         const { playBoosterTopCards, collectorBoosterTopCards } = await getTopCards(set._id);
