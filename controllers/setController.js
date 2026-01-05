@@ -37,6 +37,9 @@ const controller = {
         .populate("card_id")
         .lean();
 
+      const play_booster = [];
+      const collector_booster = [];
+
       for (const card of topCards) {
         let price_code = "usd";
         if (card.finish === "foil") {
@@ -45,8 +48,19 @@ const controller = {
           price_code = "usd_etched";
         }
         card.final_price = card.card_id.prices[price_code];
+        if (card.pack_type === "play_booster") {
+          play_booster.push(card);
+        } else if (card.pack_type === "collector_booster") {
+          collector_booster.push(card);
+        }
       }
-      const data = { count: topCards.length, top_cards: topCards };
+      const data = {
+        set_code: set.code, 
+        top_cards: {
+          play_booster: { count: play_booster.length, cards: play_booster},
+          collector_booster: { count: collector_booster.length, cards: collector_booster}
+        }
+      };
       return res.status(200).json(data)
 
     } catch (error) {
