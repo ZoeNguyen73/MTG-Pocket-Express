@@ -5,7 +5,7 @@ const UserCardModel = require("../models/userCardModel");
 const PackRuleModel = require("../models/packRuleModel");
 
 const { updateUserCard } = require("../services/userCardService");
-const { getRandomOptionWeighted } = require("../utils/randomUtils");
+const { getRandomIndexWeighted } = require("../utils/randomUtils");
 
 const controller = {
   open: async (req, res, next) => {
@@ -71,13 +71,9 @@ const controller = {
         
         } else {
           // if have to re-roll to select pool for each card in the slot
-          const matrix = {};
-          for (let i = 0; i < sources.length; i++) {
-            matrix[i] = sources[i].weight;
-          }
-
           for (let j = 0; j < quantity; j++) {
-            const finalPool = sources[getRandomOptionWeighted(matrix)];
+            const idx = getRandomIndexWeighted(sources.map(s => s.weight));
+            const finalPool = sources[idx];
             const cards = await getRandomCards({ 
               releasedAt: set.released_at, 
               setCode, 

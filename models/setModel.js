@@ -48,7 +48,7 @@ const setSchema = new mongoose.Schema({
   },
   icon_svg_uri: {
     type: String,
-  }
+  },
 });
 
 const SetModel = mongoose.model("Set", setSchema);

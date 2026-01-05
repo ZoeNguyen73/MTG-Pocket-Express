@@ -3,22 +3,16 @@ const getRandomInt = (min, max) => {
 };
 
 // options: {option1: weight1, option2: weight2, option3: weight3}
-const getRandomOptionWeighted = (options) => {
-  let totalWeight = 0;
-  Object.values(options).forEach(value => totalWeight += value);
-  
-  const weightMatrix = {};
-  let currentWeight = 0;
-  for (const [key,value] of Object.entries(options)) {
-    currentWeight += value;
-    weightMatrix[currentWeight] = key;
-  }
+const getRandomIndexWeighted = (weights) => {
+  const totalWeight = weights.reduce((sum, w) => sum + w, 0);
 
-  const rand = Math.random() * 1 * totalWeight;
-  for (const [key, value] of Object.entries(weightMatrix)) {
-    if (rand > key) continue;
-    return value;
+  let r = Math.random() * totalWeight;
+  
+  for (let i = 0; i < weights.length; i++) {
+    r -= weights[i];
+    if (r < 0) return i;
   }
+  return weights.length - 1; // safety net
 };
 
-module.exports = { getRandomInt, getRandomOptionWeighted };
+module.exports = { getRandomInt, getRandomIndexWeighted };

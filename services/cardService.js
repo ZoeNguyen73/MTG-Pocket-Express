@@ -1,21 +1,31 @@
 const CardModel = require("../models/cardModel");
 const SetModel = require("../models/setModel");
 
-const { getRandomInt, getRandomOptionWeighted } = require("../utils/randomUtils");
+const { getRandomInt, getRandomIndexWeighted } = require("../utils/randomUtils");
 
 const errorHandler = require("../middlewares/errorHandler");
 
 const getRandomRarity = (rarity) => {
   if (!rarity || (!rarity.fixed && !rarity.weighted )) return "any";
   if (rarity.fixed) return rarity.fixed;
-  if (rarity.weighted?.weights) return getRandomOptionWeighted(rarity.weighted.weights);
+
+  if (rarity.weighted?.weights) {
+    const weightsArr = Object.values(rarity.weighted.weights);
+    const idx = getRandomIndexWeighted(weightsArr);
+    return Object.keys(rarity.weighted?.weights)[idx];
+  }
   throw new Error("Missing valid rarity information in source");
 };
 
 const getRandomFinish = (finish) => {
   if (!finish || (!finish.fixed && !finish.weighted)) return "any";
   if (finish.fixed) return finish.fixed;
-  if (finish.weighted?.weights) return getRandomOptionWeighted(finish.weighted.weights);
+
+  if (finish.weighted?.weights) {
+    const weightsArr = Object.values(finish.weighted.weights);
+    const idx = getRandomIndexWeighted(weightsArr);
+    return Object.keys(finish.weighted?.weights)[idx];
+  }
   throw new Error("Missing valid finish information in source");
 };
 
@@ -276,7 +286,36 @@ const getRandomCards = async ({
       while (shouldRejectCard({card, finalRarity, finalFinish, packType, allowDup, chosenIds})) {
         // prevent infinite loop
         if (++attempts > maxAttempts) {
-          throw new Error(`Failed to generate card for slot. Constraints too tight. Query=${JSON.stringify(query)}`);
+          const counts = {
+            total: cards.length,
+            rarityOK: 0,
+            finishOK: 0,
+            packTypeOK: 0,
+            eligibilityOK: 0,
+            allOK: 0,
+          };
+
+          for (const c of cards) {
+            const rarityOK = finalRarity === "any" || c.rarity === finalRarity;
+            const finishOK = finalFinish === "any" || c.finishes?.includes(finalFinish);
+
+            const packTypes = c.pack_eligibility?.pack_types;
+            const packTypeOK = !Array.isArray(packTypes) || packTypes.length === 0 || packTypes.includes(packType);
+
+            const allowed = c.pack_eligibility?.finishes_by_pack_types?.[packType];
+            const eligibilityOK =
+              !Array.isArray(allowed) || allowed.length === 0 || allowed.includes(finalFinish);
+
+            if (rarityOK) counts.rarityOK++;
+            if (finishOK) counts.finishOK++;
+            if (packTypeOK) counts.packTypeOK++;
+            if (eligibilityOK) counts.eligibilityOK++;
+            if (rarityOK && finishOK && packTypeOK && eligibilityOK) counts.allOK++;
+          }
+
+          throw new Error(
+            `Failed slot ${slotCode}. pool=${counts.total}, rarityOK=${counts.rarityOK}, finishOK=${counts.finishOK}, packTypeOK=${counts.packTypeOK}, eligibilityOK=${counts.eligibilityOK}, allOK=${counts.allOK}. finalRarity=${finalRarity}, finalFinish=${finalFinish}. Query=${JSON.stringify(query)}`
+          );
         }
         const randomIndex = getRandomInt(0, cards.length - 1);
         card = cards[randomIndex];
@@ -294,7 +333,12 @@ const getRandomCards = async ({
       }
 
       chosenIds.push(card._id);
-      generatedCards.push({ ...card, finish: cardFinish, note: note ? note : slotCode, final_price: card.prices[price_code] });
+      generatedCards.push({ 
+        ...card, 
+        finish: cardFinish, 
+        note: note ? note : slotCode, 
+        final_price: card.prices[price_code] 
+      });
 
     }
   }

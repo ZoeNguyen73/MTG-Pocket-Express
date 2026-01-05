@@ -7,7 +7,7 @@ const SetModel = require("../../models/setModel");
 
 const SET_LIST = require("./setList");
 const CARD_SEARCH_BY_SET_API = "https://api.scryfall.com/cards/search?q=set%3D";
-const SPG_CARD_SEARCH_BY_RELEASE_DATE_API = "https://api.scryfall.com/cards/search?q=set%3Aspg+date%3D";
+const SPG_CARD_SEARCH_BY_RELEASE_DATE_API = "https://api.scryfall.com/cards/search?q=date%3D";
 const layoutCardFaceMapping = require("../../utils/cardLayoutsMapping");
 const { eligible_cards_by_set, DEFAULT_FINISH } = require("./specialElegibility");
 
@@ -28,8 +28,8 @@ const connectDb = async () => {
 
 const getCardDataBySet = async (setCode, releaseDateStr = null) => {
   let api = null;
-  if (setCode === "spg" && releaseDateStr) {
-    api = SPG_CARD_SEARCH_BY_RELEASE_DATE_API + releaseDateStr + "&unique=prints";
+  if (releaseDateStr) {
+    api = SPG_CARD_SEARCH_BY_RELEASE_DATE_API + releaseDateStr + "+set%3A" + setCode + "&unique=prints";
   } else {
     api = CARD_SEARCH_BY_SET_API + setCode + "&unique=prints";
   }

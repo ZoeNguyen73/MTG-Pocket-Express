@@ -4225,7 +4225,6 @@ const PACK_RULES = {
               rarity: { fixed: "uncommon" },
               finish: { fixed: "foil" },
               filters: { 
-                type_line: {exclude : ["Land"]}, 
                 frame_effects: { exclude_any: ["showcase", "extendedart", "scene", "panel", "webslinger", "comic", "gauntlet"]},
                 promo_types: { exclude_any: ["promopack", "textured", "boosterfun", "headliner"]},
                 full_art: false,
