@@ -275,7 +275,7 @@ const getRandomCards = async ({
         finish: cardFinish, 
         note: note ? note : slotCode, 
         final_price: card.prices[price_code],
-        special_foil_finishes = specialFoils.length ? [...specialFoils] : [], 
+        special_foil_finishes: specialFoils.length ? [...specialFoils] : [], 
       });
 
     }
@@ -341,12 +341,16 @@ const getRandomCards = async ({
         price_code = "usd_etched";
       }
 
+      // get special foil type if there is
+      const specialFoils = card.promo_types.filter(p => p.includes("foil"));
+
       chosenIds.push(card._id);
       generatedCards.push({ 
         ...card, 
         finish: cardFinish, 
         note: note ? note : slotCode, 
-        final_price: card.prices[price_code] 
+        final_price: card.prices[price_code],
+        special_foil_finishes: specialFoils.length ? [...specialFoils] : [], 
       });
 
     }
