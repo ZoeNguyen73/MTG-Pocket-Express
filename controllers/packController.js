@@ -3,6 +3,7 @@ const { getRandomCards } = require("../services/cardService");
 const SetModel = require("../models/setModel");
 const UserCardModel = require("../models/userCardModel");
 const PackRuleModel = require("../models/packRuleModel");
+const PackPriceModel = require("../models/packPriceModel");
 
 const { updateUserCard } = require("../services/userCardService");
 const { getRandomIndexWeighted } = require("../utils/randomUtils");
@@ -14,7 +15,7 @@ const controller = {
     
     let set = null;
     try {
-      set = await SetModel.findOne({ code: setCode });
+      set = await SetModel.findOne({ code: setCode }).lean();
       if (!set) {
         const error = new Error();
         error.details = "Unable to find matching Set in database";
@@ -29,6 +30,8 @@ const controller = {
       }
       next(error);
     }
+
+    const pack_price = await PackPriceModel.findOne({ set_code: set.code, booster_type: formattedPackType }).lean();
 
     try {
       // find matching active pack rule
@@ -105,6 +108,7 @@ const controller = {
       
       const data = {
         set,
+        pack_price: pack_price?.price ? pack_price.price : null,
         card_quantity: results.length,
         cards: results,
       };
