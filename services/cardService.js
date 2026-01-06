@@ -342,7 +342,7 @@ const getRandomCards = async ({
       }
 
       // get special foil type if there is
-      const specialFoils = card.promo_types.filter(p => p.includes("foil"));
+      const specialFoils = card.promo_types.filter(p => p.includes("foil") || p.includes("neonink") || p.includes("textured"));
 
       chosenIds.push(card._id);
       generatedCards.push({ 
