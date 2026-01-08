@@ -22,19 +22,22 @@ const updateUserCard = async (user_id, card, quantity = 1) => {
   }
 
   try {
+    let result = null;
     if (quantity > 0) {
-      await UserCardModel.updateOne(
+      result = await UserCardModel.findOneAndUpdate(
         { user_id, card_id, finish, special_foil_finish },
         { $inc: { quantity }, latest_add_time: Date.now() },
-        { upsert: true }
-      )
+        { upsert: true, returnDocument: "after" }
+      );
     } else {
-      await UserCardModel.updateOne(
+      result = await UserCardModel.findOneAndUpdate(
         { user_id, card_id, finish, special_foil_finish },
-        { $inc: { quantity } },
-        { upsert: true }
-      )
+        { $inc: { quantity }, },
+        { upsert: true, returnDocument: "after" }
+      );
     }
+
+    return result._id;
     
   } catch (error) {
     errorHandler(error);

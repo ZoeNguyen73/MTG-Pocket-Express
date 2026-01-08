@@ -99,7 +99,8 @@ const controller = {
           try {
             const existingCards = await UserCardModel.find({user_id, card_id: card._id});
             if (existingCards.length === 0) card.is_new = true;
-            await updateUserCard(user_id, card);
+            const userCardId = await updateUserCard(user_id, card);
+            card.user_card_id = userCardId;
           } catch (error) {
             next(error);
           }
