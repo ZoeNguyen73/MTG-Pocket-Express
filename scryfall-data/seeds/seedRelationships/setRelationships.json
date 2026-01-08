@@ -1,0 +1,24 @@
+[
+  {
+    "parent_set_code": "DFT",
+    "child_set_code": "SPG",
+    "relationship_type": "special_guest",
+    "is_active": true,
+    "rules": {
+      "released_at_match_parent": true,
+      "allowed_card_ids": [],
+      "excluded_card_ids": []
+    }
+  },
+  {
+    "parent_set_code": "DFT",
+    "child_set_code": "DRC",
+    "relationship_type": "commander",
+    "is_active": true,
+    "rules": {
+      "released_at_match_parent": true,
+      "allowed_card_ids": [],
+      "excluded_card_ids": []
+    }
+  }
+]

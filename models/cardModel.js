@@ -1,5 +1,8 @@
 const mongoose = require("mongoose");
 
+const { PACK_TYPES } = require("../utils/boosterTypes");
+const { FINISHES, RARITY } = require("../utils/cardAttributes");
+
 const cardFaceSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -57,6 +60,10 @@ const cardSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  released_at: {
+    type: String,
+    required: true,
+  },
   layout: {
     type: String,
     required: true,
@@ -82,6 +89,7 @@ const cardSchema = new mongoose.Schema({
   },
   finishes: {
     type: [String],
+    enum: FINISHES,
     required: true,
   },
   oversized: {
@@ -114,11 +122,16 @@ const cardSchema = new mongoose.Schema({
   },
   rarity: {
     type: String,
+    enum: RARITY,
     required: true,
   },
   frame: {
     type: String,
     required: true,
+  },
+  frame_effects: {
+    type: [String],
+    default: [],
   },
   prices: {
     type: cardPricesSchema,
@@ -127,6 +140,27 @@ const cardSchema = new mongoose.Schema({
   },
   prices_updated_at: {
     type: Date,
+  },
+  promo_types: {
+    type: [String],
+    default: [],
+  },
+
+  pack_eligibility: {
+    // which pack types this card can appear in and in which finish
+    // this is optional
+    pack_types: {
+      type: [String],
+      enum: PACK_TYPES,
+      default: undefined, // treat as no special eligibility logic
+    },
+
+    finishes_by_pack_types: {
+      play_booster: { type: [String], enum: FINISHES, default: undefined },
+      collector_booster: { type: [String], enum: FINISHES, default: undefined },
+    },
+
+    override_reason: { type: String, default: "" },
   },
 });
 

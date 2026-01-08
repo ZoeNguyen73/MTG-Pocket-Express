@@ -1,5 +1,14 @@
 const { RARITY } = require("./cardAttributes");
 
+const PACK_TYPES = [
+  "play_booster", 
+  "collector_booster", 
+  "chocobo_holiday_bundle", 
+  "box_topper", 
+  "bundle", 
+  "bab"
+];
+
 const BOOSTER_TYPES = [
   {
     code: "play-booster",
@@ -39,4 +48,4 @@ const BOOSTER_TYPES = [
   },
 ];
 
-module.exports = BOOSTER_TYPES;
+module.exports = { BOOSTER_TYPES, PACK_TYPES };

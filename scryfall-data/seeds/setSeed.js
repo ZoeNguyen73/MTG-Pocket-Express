@@ -14,7 +14,7 @@ const connectDb = async () => {
       throw new Error("MONGO_DB_STRING is not defined in the environment variables.");
     }
 
-    await mongoose.connect(process.env.MONGO_DB_STRING, { dbName: "MTG-Pocket" });
+    await mongoose.connect(process.env.MONGO_DB_STRING, { dbName: process.env.DB_NAME });
     console.log("Connected to DB");
   } catch (error) {
     console.log(`Failed to connect to DB: ${error}`);
