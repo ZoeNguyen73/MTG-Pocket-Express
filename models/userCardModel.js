@@ -15,6 +15,10 @@ const userCardSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  special_foil_finish: {
+    type: String,
+    default: null,
+  },
   quantity: {
     type: Number,
     required: true,
@@ -34,8 +38,8 @@ const userCardSchema = new mongoose.Schema({
 
 // unique compound index to ensure no duplicated document
 // userId - cardId - finish combination should be unique
-userCardSchema.index({ user_id: 1, card_id: 1, finish: 1}, { unique: true });
+userCardSchema.index({ user_id: 1, card_id: 1, finish: 1, special_foil_finish: 1}, { unique: true });
 
-const UserCardModel = mongoose.model("User Card", userCardSchema);
+const UserCardModel = mongoose.model("UserCard", userCardSchema);
 
 module.exports = UserCardModel;

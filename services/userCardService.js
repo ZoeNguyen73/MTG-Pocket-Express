@@ -6,6 +6,9 @@ const errorHandler = require("../middlewares/errorHandler");
 const updateUserCard = async (user_id, card, quantity = 1) => {
   const card_id = card._id.toString();
   const finish = card.finish;
+  const special_foil_finish = card.special_foil_finishes.length
+    ? card.special_foil_finishes[0]
+    : null;
 
   try {
     await UserCardValidator.update.validateAsync({
@@ -21,13 +24,13 @@ const updateUserCard = async (user_id, card, quantity = 1) => {
   try {
     if (quantity > 0) {
       await UserCardModel.updateOne(
-        { user_id, card_id, finish },
+        { user_id, card_id, finish, special_foil_finish },
         { $inc: { quantity }, latest_add_time: Date.now() },
         { upsert: true }
       )
     } else {
       await UserCardModel.updateOne(
-        { user_id, card_id, finish },
+        { user_id, card_id, finish, special_foil_finish },
         { $inc: { quantity } },
         { upsert: true }
       )
@@ -38,7 +41,7 @@ const updateUserCard = async (user_id, card, quantity = 1) => {
   }
 };
 
-const transferUserCard = async (fromUserId, toUserId, card_id, finish, transferQuantity = 1) => {
+const transferUserCard = async (fromUserId, toUserId, card_id, finish, special_foil_finish, transferQuantity = 1) => {
   try {
     // validate that the transfer quantity is valid 
     if (!Number.isInteger(transferQuantity) || transferQuantity < 1) {
@@ -52,7 +55,8 @@ const transferUserCard = async (fromUserId, toUserId, card_id, finish, transferQ
     const fromUserCard = await UserCardModel.findOne({
       user_id: fromUserId,
       card_id,
-      finish
+      finish,
+      special_foil_finish,
     });
 
     if (!fromUserCard || fromUserCard.quantity < transferQuantity) {
@@ -63,13 +67,13 @@ const transferUserCard = async (fromUserId, toUserId, card_id, finish, transferQ
     }
 
     await UserCardModel.updateOne(
-      { user_id: fromUserId, card_id, finish },
+      { user_id: fromUserId, card_id, finish, special_foil_finish },
       { $inc: { quantity: transferQuantity * -1 } },
       { upsert: false }
     );
 
     await UserCardModel.updateOne(
-      { user_id: toUserId, card_id, finish },
+      { user_id: toUserId, card_id, finish, special_foil_finish },
       { $inc: { quantity: transferQuantity }, latest_add_time: Date.now() },
       { upsert: true }
     );

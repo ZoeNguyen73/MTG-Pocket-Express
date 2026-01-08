@@ -3593,7 +3593,7 @@ const PACK_RULES = {
             {
               source_type: "main",
               weight: 99,
-              rarity: { fixed: "common" },
+              rarity: { fixed: "uncommon" },
               finish: { fixed: "foil" },
               filters: { 
                 type_line: {exclude : ["Basic Land"]}, 
@@ -3605,7 +3605,7 @@ const PACK_RULES = {
             {
               source_type: "main",
               weight: 1,
-              rarity: { fixed: "common" },
+              rarity: { fixed: "uncommon" },
               finish: { fixed: "foil" },
               filters: {  
                 frame_effects: { include_any: ["cidvariants"]},
@@ -3676,13 +3676,13 @@ const PACK_RULES = {
               }
             },
             {
-              source_type: "child_set",
-              child_set_code: "fic",
+              source_type: "main",
               weight: 4.5,
               rarity: { fixed: "uncommon" },
               finish: { fixed: "foil" },
               filters: { 
                 promo_types: { include_any: ["surgefoil"] },
+                full_art: true,
               }
             },
           ]
@@ -3741,7 +3741,7 @@ const PACK_RULES = {
               rarity: { weighted: { weights: { rare: 18.2, mythic: 2.9 }} },
               finish: { fixed: "nonfoil" },
               filters: { 
-                promo_types: { exclude_any: ["promopack"], include_any: ["boosterfun"]},
+                promo_types: { exclude_any: ["promopack", "surgefoil"], include_any: ["boosterfun"]},
                 frame_effects: { include_any: ["extendedart"]},
               }
             },
@@ -3776,6 +3776,30 @@ const PACK_RULES = {
               filters: { 
                 promo_types: { exclude_any: ["promopack", "surgefoil"], include_any: ["boosterfun"]},
                 frame_effects: { exclude_any: ["extendedart"]},
+                full_art: true,
+              }
+            },
+            {
+              source_type: "child_set",
+              child_set_code: "fic",
+              weight: 5.8,
+              rarity: { fixed: "rare" },
+              finish: { fixed: "foil" },
+              filters: { 
+                type_line: { exclude: ["Legendary Creature"]},
+                promo_types: { exclude_any: ["promopack", "surgefoil"], include_any: ["boosterfun"]},
+                frame_effects: { include_any: ["extendedart"]},
+              }
+            },
+            {
+              source_type: "child_set",
+              child_set_code: "fic",
+              weight: 0.8,
+              rarity: { fixed: "mythic" },
+              finish: { fixed: "foil" },
+              filters: { 
+                promo_types: { exclude_any: ["promopack", "surgefoil"], include_any: ["boosterfun"]},
+                frame_effects: { include_any: ["extendedart"]},
               }
             },
             {
