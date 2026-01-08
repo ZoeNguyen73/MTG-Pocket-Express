@@ -1,18 +1,21 @@
 const { getRandomCards } = require("../services/cardService");
-const BOOSTER_TYPES = require("../utils/boosterTypes");
 
 const SetModel = require("../models/setModel");
 const UserCardModel = require("../models/userCardModel");
+const PackRuleModel = require("../models/packRuleModel");
+const PackPriceModel = require("../models/packPriceModel");
 
 const { updateUserCard } = require("../services/userCardService");
+const { getRandomIndexWeighted } = require("../utils/randomUtils");
 
 const controller = {
   open: async (req, res, next) => {
     const { setCode, packType } = req.params;
-
+    const formattedPackType = packType.replace("-", "_");
+    
     let set = null;
     try {
-      set = await SetModel.findOne({ code: setCode });
+      set = await SetModel.findOne({ code: setCode }).lean();
       if (!set) {
         const error = new Error();
         error.details = "Unable to find matching Set in database";
@@ -28,30 +31,64 @@ const controller = {
       next(error);
     }
 
+    const pack_price = await PackPriceModel.findOne({ set_code: set.code, booster_type: formattedPackType }).lean();
+
     try {
-      // find matching booster type
-      if (BOOSTER_TYPES.filter(type => type.code === packType).length === 0) {
-        throw new Error("Unable to find matching booster type");
+      // find matching active pack rule
+      const packRule = await PackRuleModel.findOne({ set_code: setCode, booster_type: formattedPackType });
+      if (!packRule || !packRule.is_active) {
+        throw new Error("Unable to find matching active pack rule");
       }
 
-      // get card distributions information for the booster type
-      const distributions = BOOSTER_TYPES.filter(type => type.code === packType)[0].distributions;
-      if (!distributions || !distributions.length) {
-        throw new Error("Missing distributions information for this booster type");
+      if (!packRule.slots || packRule.slots.length === 0) {
+        throw new Error("Missing slots logic in pack rules")
       }
 
-      // looping through the distributions to generate cards
       let results = [];
-      for (let i = 0; i < distributions.length; i++) {
-        const dist = distributions[i];
-        const cards = await getRandomCards({
-          setCode,
-          rarity: dist.rarity,
-          type: dist.type_line || {},
-          quantity: dist.quantity,
-          note: dist.note || "",
-        });
-        results = results.concat(cards);
+
+      // looping through slots
+      for (const slot of packRule.slots) {
+        // console.log("slot: " + JSON.stringify(slot));
+        const {slot_code, quantity, sources, allow_duplicates } = slot;
+
+        if (sources.length === 0) continue;
+
+        // need to check if there are more than 1 sources
+        // and that quantity > 1
+        // if yes, then need to do one by one instead of batch generate
+        // do one by one so that the rarity/finish can be re-rolled every time
+
+        // if can use single pool for all cards in slot
+        if (sources.length === 1) {
+          const cards = await getRandomCards({ 
+            releasedAt: set.released_at, 
+            setCode, 
+            setId: set._id, 
+            pool: sources[0], 
+            quantity, 
+            allowDup: allow_duplicates,
+            packType: formattedPackType,
+            slotCode: slot_code,   
+          });
+          results = results.concat(cards);
+        
+        } else {
+          // if have to re-roll to select pool for each card in the slot
+          for (let j = 0; j < quantity; j++) {
+            const idx = getRandomIndexWeighted(sources.map(s => s.weight));
+            const finalPool = sources[idx];
+            const cards = await getRandomCards({ 
+              releasedAt: set.released_at, 
+              setCode, 
+              setId: set._id, 
+              pool: finalPool, 
+              quantity: 1,
+              packType: formattedPackType,
+              slotCode: slot_code,  
+            });
+            results = results.concat(cards);
+          }
+        }
       }
 
       // update userCard if the user is not guest
@@ -62,7 +99,8 @@ const controller = {
           try {
             const existingCards = await UserCardModel.find({user_id, card_id: card._id});
             if (existingCards.length === 0) card.is_new = true;
-            await updateUserCard(user_id, card);
+            const userCardId = await updateUserCard(user_id, card);
+            card.user_card_id = userCardId;
           } catch (error) {
             next(error);
           }
@@ -71,6 +109,7 @@ const controller = {
       
       const data = {
         set,
+        pack_price: pack_price?.price ? pack_price.price : null,
         card_quantity: results.length,
         cards: results,
       };
